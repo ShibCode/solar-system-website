@@ -3,11 +3,12 @@ import Experience from "./components/experience";
 import { Canvas } from "@react-three/fiber";
 import { Leva } from "leva";
 import { Perf } from "r3f-perf";
+import Header from "./layout/Header";
 
 const App = () => {
   return (
     <>
-      <Leva collapsed />
+      <Leva collapsed hidden />
 
       <Canvas
         className="!fixed inset-0"
@@ -17,6 +18,8 @@ const App = () => {
         {/* <Perf position="top-left" /> */}
         <Experience />
       </Canvas>
+
+      <Header />
     </>
   );
 };

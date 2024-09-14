@@ -13,60 +13,62 @@ import * as THREE from "three";
 import gsap from "gsap";
 import Orbit from "./Orbit";
 import Planet from "./Planet";
+import {
+  setFocusedPlanet,
+  setHoveredPlanet,
+  toggleIsChangingZoom,
+} from "../../features/orbitSlice/orbitSlice";
+import { useDispatch, useSelector } from "react-redux";
 
-const ASPECT = 0.3;
+// Aspect ratio used for orbit calculation
+const ASPECT = 0.25;
 
 const Planets = () => {
-  const [hoveredPlanet, setHoveredPlanet] = useState(null);
-  const [focusedPlanet, setFocusedPlanet] = useState(null);
-  const [isChangingZoom, setIsChangingZoom] = useState(false);
+  const { hoveredPlanet, focusedPlanet, isChangingZoom } = useSelector(
+    (state) => state.orbit
+  );
+  const dispatch = useDispatch();
 
   const { camera } = useThree();
 
-  const groupRef = useRef();
-  const planetMeshes = useRef([]);
+  const groupRef = useRef(); // Reference to the group containing all planets and orbits
+  const planetMeshes = useRef([]); // Reference array to store the meshes of planets for raycasting
 
   const raycaster = useMemo(() => new THREE.Raycaster(), []);
 
+  const groupAttributes = useRef({
+    scale: 1,
+    positionX: 0,
+    positionY: 0,
+  }); // main purpose here was to add smooth ease rather than linear ease
+
   useEffect(() => {
     const handleClick = () => {
-      setIsChangingZoom(true);
+      dispatch(toggleIsChangingZoom());
 
-      const focusScale = 8;
+      const focusScale = 9; // the scale when we are focused on one planet
+
+      const { x, y } = hoveredPlanet.object.position;
+      const planetScale = hoveredPlanet.object.scale.x;
+
       const targetScale = focusedPlanet ? 1 : focusScale;
+      const targetX = focusedPlanet
+        ? 0
+        : -x * targetScale + camera.left - 3.75 * planetScale;
+      const targetY = focusedPlanet ? 0 : -y * targetScale;
+      y;
 
-      const { x: planetX, y: planetY } = hoveredPlanet.object.position;
-      const { x: groupX, y: groupY } = groupRef.current.position;
-      const groupScale = groupRef.current.scale.x;
+      gsap.to(groupAttributes.current, {
+        scale: targetScale,
+        positionX: targetX,
+        positionY: targetY,
+        duration: focusedPlanet ? 1 : 1.5,
+        ease: "power2.inOut",
+        onComplete: () => dispatch(toggleIsChangingZoom()),
+      });
 
-      const distanceScale = targetScale - groupScale;
-      const distanceX = focusedPlanet
-        ? planetX * focusScale - camera.left
-        : -planetX * targetScale + camera.left - groupX;
-      const distanceY = focusedPlanet
-        ? planetY * focusScale
-        : -planetY * targetScale - groupY;
-
-      gsap.to(
-        {},
-        {
-          duration: 1,
-          ease: "power2.inOut",
-          onUpdate: function () {
-            const x = groupX + distanceX * this.progress();
-            const y = groupY + distanceY * this.progress();
-            const scale = groupScale + distanceScale * this.progress();
-
-            groupRef.current.scale.setScalar(scale);
-
-            groupRef.current.position.set(x, y, 0);
-          },
-          onComplete: () => setIsChangingZoom(false),
-        }
-      );
-
-      if (focusedPlanet) setFocusedPlanet(null);
-      else setFocusedPlanet(hoveredPlanet);
+      if (focusedPlanet) dispatch(setFocusedPlanet(null));
+      else dispatch(setFocusedPlanet(hoveredPlanet));
     };
 
     if (!isChangingZoom && hoveredPlanet)
@@ -75,11 +77,16 @@ const Planets = () => {
   }, [hoveredPlanet, isChangingZoom]);
 
   useFrame((state) => {
+    // handle the raycasting for detecting the hovered planet
     raycaster.setFromCamera(state.pointer, state.camera);
     const intersects = raycaster.intersectObjects(planetMeshes.current);
 
-    if (intersects[0]) setHoveredPlanet(intersects[0]);
-    else setHoveredPlanet(null);
+    if (intersects[0]) dispatch(setHoveredPlanet(intersects[0]));
+    else dispatch(setHoveredPlanet(null));
+
+    groupRef.current.scale.setScalar(groupAttributes.current.scale);
+    groupRef.current.position.x = groupAttributes.current.positionX;
+    groupRef.current.position.y = groupAttributes.current.positionY;
   });
 
   const getPath = (curve) => {
