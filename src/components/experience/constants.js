@@ -34,22 +34,35 @@ export const planets = [
 export const orbits = [
   {
     scale: 1,
-    rotation: Math.PI * 0.11,
+    rotation: Math.PI * 0.09,
   },
   {
     scale: 1.5,
-    rotation: Math.PI * 0.12,
+    rotation: Math.PI * 0.105,
   },
   {
     scale: 2.2,
-    rotation: Math.PI * 0.12,
+    rotation: Math.PI * 0.11,
   },
   {
     scale: 3.5,
-    rotation: Math.PI * 0.1,
+    rotation: Math.PI * 0.09,
   },
   {
     scale: 5.5,
-    rotation: Math.PI * 0.1,
+    rotation: Math.PI * 0.08,
   },
 ];
+
+const ORBIT_STAGGER_FACTOR = 0.6;
+
+export const FIRST_ORBIT_FADE_IN_DURATION = 0.5;
+
+export const ORBIT_SCALE_UP_DURATION = 0.4;
+export const ORBIT_SCALE_UP_STAGGER =
+  ORBIT_SCALE_UP_DURATION * ORBIT_STAGGER_FACTOR;
+
+export const ORBIT_SCALE_UP_COMPLETE_DURATION =
+  ORBIT_SCALE_UP_STAGGER * (orbits.length - 1) + 0.5 + ORBIT_SCALE_UP_DURATION;
+
+export const PLANET_FADE_IN_DURATION = 1;

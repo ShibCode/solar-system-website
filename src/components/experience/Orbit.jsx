@@ -1,10 +1,11 @@
 import { useFrame } from "@react-three/fiber";
 import gsap from "gsap";
 import React, { useEffect, useRef } from "react";
-import { orbits } from "./constants";
-
-const DURATION = 0.4;
-const STAGGER_FACTOR = 0.6;
+import {
+  ORBIT_SCALE_UP_DURATION,
+  ORBIT_SCALE_UP_STAGGER,
+  orbits,
+} from "./constants";
 
 const Orbit = ({ path, scale, index }) => {
   const orbitRef = useRef();
@@ -13,18 +14,24 @@ const Orbit = ({ path, scale, index }) => {
   });
 
   useEffect(() => {
-    if (index === 0) return;
+    if (index === 0) {
+      gsap.to(orbitRef.current.material, {
+        opacity: 0.5,
+      });
+
+      return;
+    }
 
     gsap.to(attributes.current, {
       scale,
-      duration: DURATION,
-      delay: DURATION * STAGGER_FACTOR * index + 1,
+      duration: ORBIT_SCALE_UP_DURATION,
+      delay: ORBIT_SCALE_UP_STAGGER * index + 0.5,
       ease: "power2.out",
     });
 
     gsap.set(orbitRef.current.material, {
-      opacity: 1,
-      delay: DURATION * STAGGER_FACTOR * index + 1,
+      opacity: 0.5,
+      delay: ORBIT_SCALE_UP_STAGGER * index + 0.5,
       ease: "power2.out",
     });
   }, []);
@@ -37,10 +44,10 @@ const Orbit = ({ path, scale, index }) => {
     <line ref={orbitRef}>
       <bufferGeometry attach="geometry" {...path} />
       <lineBasicMaterial
-        color={"#484848"}
+        color={"#4d4d5c"}
         attach="material"
         transparent
-        opacity={index === 0 ? 1 : 0}
+        opacity={0}
       />
     </line>
   );

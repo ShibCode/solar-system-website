@@ -40,28 +40,24 @@ const Planets = () => {
     scale: 1,
     positionX: 0,
     positionY: 0,
-  }); // main purpose here was to add smooth ease rather than linear ease
+  }); // update these values using gsap and map these over the whole group
 
   useEffect(() => {
     const handleClick = () => {
       dispatch(toggleIsChangingZoom());
 
-      const focusScale = 9; // the scale when we are focused on one planet
-
       const { x, y } = hoveredPlanet.object.position;
       const planetScale = hoveredPlanet.object.scale.x;
 
-      const targetScale = focusedPlanet ? 1 : focusScale;
-      const targetX = focusedPlanet
-        ? 0
-        : -x * targetScale + camera.left - 3.75 * planetScale;
-      const targetY = focusedPlanet ? 0 : -y * targetScale;
+      const focusScale = 9; // the scale when we are focused on one planet
+      const focusX = -x * focusScale + camera.left - 3.75 * planetScale;
+      const focusY = -y * focusScale;
       y;
 
       gsap.to(groupAttributes.current, {
-        scale: targetScale,
-        positionX: targetX,
-        positionY: targetY,
+        scale: focusedPlanet ? 1 : focusScale,
+        positionX: focusedPlanet ? 0 : focusX,
+        positionY: focusedPlanet ? 0 : focusY,
         duration: focusedPlanet ? 1 : 1.5,
         ease: "power2.inOut",
         onComplete: () => dispatch(toggleIsChangingZoom()),
@@ -74,7 +70,7 @@ const Planets = () => {
     if (!isChangingZoom && hoveredPlanet)
       window.addEventListener("click", handleClick);
     return () => window.removeEventListener("click", handleClick);
-  }, [hoveredPlanet, isChangingZoom]);
+  }, [hoveredPlanet, isChangingZoom, focusedPlanet]);
 
   useFrame((state) => {
     // handle the raycasting for detecting the hovered planet

@@ -1,7 +1,12 @@
-import { Html } from "@react-three/drei";
+import { Html, useHelper } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import gsap from "gsap";
 import React, { forwardRef, useEffect, useRef, useState } from "react";
+import {
+  ORBIT_SCALE_UP_COMPLETE_DURATION,
+  PLANET_FADE_IN_DURATION,
+} from "./constants";
+import * as THREE from "three";
 
 const Planet = forwardRef(({ planet, orbit, points, mesh, index }, ref) => {
   const [posX, posY] = Object.values(points.getPoint(planet.positionIndex));
@@ -11,12 +16,19 @@ const Planet = forwardRef(({ planet, orbit, points, mesh, index }, ref) => {
   const labelRef = useRef();
 
   useEffect(() => {
-    if (mesh && index > 0)
+    if (!mesh) return;
+
+    if (index > 0)
       gsap.fromTo(
         mesh.material,
         { opacity: 0 },
-        { opacity: 1, duration: 1, delay: 2.2 }
+        {
+          opacity: 1,
+          duration: PLANET_FADE_IN_DURATION,
+          delay: ORBIT_SCALE_UP_COMPLETE_DURATION,
+        }
       );
+    else gsap.fromTo(mesh.material, { opacity: 0 }, { opacity: 1 });
   }, [mesh]);
 
   useEffect(() => {
@@ -24,7 +36,12 @@ const Planet = forwardRef(({ planet, orbit, points, mesh, index }, ref) => {
       gsap.fromTo(
         label,
         { y: 20, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.5, delay: 2.5 }
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.5,
+          delay: ORBIT_SCALE_UP_COMPLETE_DURATION + PLANET_FADE_IN_DURATION / 4,
+        }
       );
   }, [label]);
 
@@ -33,8 +50,8 @@ const Planet = forwardRef(({ planet, orbit, points, mesh, index }, ref) => {
   useEffect(() => {
     gsap.to(firstPlanetPositionIndex, {
       current: 1 + planet.positionIndex,
-      duration: 2.2,
-      ease: "power1.out",
+      duration: ORBIT_SCALE_UP_COMPLETE_DURATION + PLANET_FADE_IN_DURATION / 4,
+      ease: "back.out(0.6)",
     });
   }, []);
 
@@ -52,13 +69,17 @@ const Planet = forwardRef(({ planet, orbit, points, mesh, index }, ref) => {
     }
   });
 
+  const light = useRef();
+
+  // useHelper(light, THREE.PointLightHelper, 1, "white");
+
   return (
     <mesh
       ref={ref}
       scale={planet.size}
       position={[posX * orbit.scale, posY * orbit.scale, 0]}
     >
-      <sphereGeometry args={[1, 64, 64]} />
+      <sphereGeometry args={[1, 32, 32]} />
       <meshStandardMaterial color={planet.color} transparent />
 
       <Html
