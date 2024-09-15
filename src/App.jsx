@@ -20,7 +20,7 @@ const App = () => {
         camera={{ visible: false }}
         orthographic
       >
-        <Perf position="top-left" />
+        {/* <Perf position="top-left" /> */}
         <Experience />
       </Canvas>
 
