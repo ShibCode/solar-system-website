@@ -2,6 +2,7 @@ import { useFrame } from "@react-three/fiber";
 import gsap from "gsap";
 import React, { useEffect, useRef } from "react";
 import {
+  INITIAL_DELAY,
   ORBIT_SCALE_UP_DURATION,
   ORBIT_SCALE_UP_STAGGER,
   orbits,
@@ -17,6 +18,7 @@ const Orbit = ({ path, scale, index }) => {
     if (index === 0) {
       gsap.to(orbitRef.current.material, {
         opacity: 0.5,
+        delay: INITIAL_DELAY - 0.5,
       });
 
       return;
@@ -25,13 +27,13 @@ const Orbit = ({ path, scale, index }) => {
     gsap.to(attributes.current, {
       scale,
       duration: ORBIT_SCALE_UP_DURATION,
-      delay: ORBIT_SCALE_UP_STAGGER * index + 0.5,
+      delay: ORBIT_SCALE_UP_STAGGER * index + 0.5 + INITIAL_DELAY,
       ease: "power2.out",
     });
 
     gsap.set(orbitRef.current.material, {
       opacity: 0.5,
-      delay: ORBIT_SCALE_UP_STAGGER * index + 0.5,
+      delay: ORBIT_SCALE_UP_STAGGER * index + 0.5 + INITIAL_DELAY,
       ease: "power2.out",
     });
   }, []);

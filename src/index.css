@@ -6,6 +6,6 @@
 
 @layer base {
   #root {
-    @apply min-h-screen text-white;
+    @apply w-full h-[100dvh] text-white overflow-hidden relative;
   }
 }

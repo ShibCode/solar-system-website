@@ -5,13 +5,38 @@ import { Leva } from "leva";
 import { Perf } from "r3f-perf";
 import Header from "./layout/Header";
 import Footer from "./layout/Footer";
+import gsap from "gsap";
+import {
+  ORBIT_SCALE_UP_COMPLETE_DURATION,
+  PLANET_FADE_IN_DURATION,
+} from "./components/experience/constants";
+import Navigation from "./layout/Navigation";
 
 const App = () => {
-  useEffect(() => {});
+  useEffect(() => {
+    const items = document.querySelectorAll(".item-slide");
+
+    gsap.fromTo(
+      items,
+      {
+        y: (_, elem) => {
+          const shouldSlideUp = elem.classList.contains("slide-up");
+
+          return 120 * (shouldSlideUp ? 1 : -1);
+        },
+      },
+      {
+        y: 0,
+        stagger: 0.125,
+        ease: "power2.out",
+        delay: ORBIT_SCALE_UP_COMPLETE_DURATION + PLANET_FADE_IN_DURATION * 0.5,
+      }
+    );
+  }, []);
 
   return (
     <>
-      <Leva collapsed />
+      <Leva collapsed hidden />
 
       <div className="fixed inset-0 bg-[url('/background2.png')] bg-no-repeat bg-cover bg-center" />
 
@@ -26,6 +51,7 @@ const App = () => {
 
       <Header />
       <Footer />
+      <Navigation />
     </>
   );
 };

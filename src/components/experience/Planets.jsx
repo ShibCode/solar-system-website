@@ -59,6 +59,7 @@ const Planets = () => {
         positionX: focusedPlanet ? 0 : focusX,
         positionY: focusedPlanet ? 0 : focusY,
         duration: focusedPlanet ? 1 : 1.5,
+        delay: focusedPlanet ? 0 : 0.1,
         ease: "power2.inOut",
         onComplete: () => dispatch(toggleIsChangingZoom()),
       });

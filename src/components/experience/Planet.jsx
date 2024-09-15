@@ -1,12 +1,12 @@
-import { Html, useHelper } from "@react-three/drei";
+import { Html } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import gsap from "gsap";
-import React, { forwardRef, useEffect, useRef, useState } from "react";
+import React, { forwardRef, useEffect, useMemo, useRef, useState } from "react";
 import {
+  INITIAL_DELAY,
   ORBIT_SCALE_UP_COMPLETE_DURATION,
   PLANET_FADE_IN_DURATION,
 } from "./constants";
-import * as THREE from "three";
 
 const Planet = forwardRef(({ planet, orbit, points, mesh, index }, ref) => {
   const [posX, posY] = Object.values(points.getPoint(planet.positionIndex));
@@ -18,7 +18,7 @@ const Planet = forwardRef(({ planet, orbit, points, mesh, index }, ref) => {
   useEffect(() => {
     if (!mesh) return;
 
-    if (index > 0)
+    if (index > 0) {
       gsap.fromTo(
         mesh.material,
         { opacity: 0 },
@@ -28,19 +28,23 @@ const Planet = forwardRef(({ planet, orbit, points, mesh, index }, ref) => {
           delay: ORBIT_SCALE_UP_COMPLETE_DURATION,
         }
       );
-    else gsap.fromTo(mesh.material, { opacity: 0 }, { opacity: 1 });
+    } else
+      gsap.fromTo(
+        mesh.material,
+        { opacity: 0 },
+        { opacity: 1, delay: INITIAL_DELAY }
+      );
   }, [mesh]);
 
   useEffect(() => {
     if (label)
       gsap.fromTo(
         label,
-        { y: 20, opacity: 0 },
+        { opacity: 0 },
         {
-          y: 0,
           opacity: 1,
           duration: 0.5,
-          delay: ORBIT_SCALE_UP_COMPLETE_DURATION + PLANET_FADE_IN_DURATION / 4,
+          delay: ORBIT_SCALE_UP_COMPLETE_DURATION + 0.3,
         }
       );
   }, [label]);
@@ -50,8 +54,12 @@ const Planet = forwardRef(({ planet, orbit, points, mesh, index }, ref) => {
   useEffect(() => {
     gsap.to(firstPlanetPositionIndex, {
       current: 1 + planet.positionIndex,
-      duration: ORBIT_SCALE_UP_COMPLETE_DURATION + PLANET_FADE_IN_DURATION / 4,
-      ease: "back.out(0.6)",
+      duration:
+        ORBIT_SCALE_UP_COMPLETE_DURATION +
+        PLANET_FADE_IN_DURATION * 0.25 -
+        INITIAL_DELAY,
+      delay: INITIAL_DELAY,
+      ease: "power2.out",
     });
   }, []);
 

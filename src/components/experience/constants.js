@@ -56,6 +56,8 @@ export const orbits = [
 
 const ORBIT_STAGGER_FACTOR = 0.6;
 
+export const INITIAL_DELAY = 1;
+
 export const FIRST_ORBIT_FADE_IN_DURATION = 0.5;
 
 export const ORBIT_SCALE_UP_DURATION = 0.4;
@@ -63,6 +65,9 @@ export const ORBIT_SCALE_UP_STAGGER =
   ORBIT_SCALE_UP_DURATION * ORBIT_STAGGER_FACTOR;
 
 export const ORBIT_SCALE_UP_COMPLETE_DURATION =
-  ORBIT_SCALE_UP_STAGGER * (orbits.length - 1) + 0.5 + ORBIT_SCALE_UP_DURATION;
+  ORBIT_SCALE_UP_STAGGER * (orbits.length - 1) +
+  0.5 +
+  ORBIT_SCALE_UP_DURATION +
+  INITIAL_DELAY;
 
-export const PLANET_FADE_IN_DURATION = 1;
+export const PLANET_FADE_IN_DURATION = 0.6;
