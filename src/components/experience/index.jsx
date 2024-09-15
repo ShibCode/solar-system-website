@@ -31,14 +31,14 @@ const Experience = () => {
 
   return (
     <>
-      <EffectComposer>
+      {/* <EffectComposer>
         <Bloom
           mipmapBlur
           intensity={0.75}
           luminanceSmoothing={0}
           luminanceThreshold={0}
         />
-      </EffectComposer>
+      </EffectComposer> */}
       <Lights />
       <Planets />
     </>

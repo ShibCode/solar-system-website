@@ -69,10 +69,6 @@ const Planet = forwardRef(({ planet, orbit, points, mesh, index }, ref) => {
     }
   });
 
-  const light = useRef();
-
-  // useHelper(light, THREE.PointLightHelper, 1, "white");
-
   return (
     <mesh
       ref={ref}

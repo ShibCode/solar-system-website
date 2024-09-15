@@ -11,7 +11,7 @@ const App = () => {
 
   return (
     <>
-      <Leva collapsed hidden />
+      <Leva collapsed />
 
       <div className="fixed inset-0 bg-[url('/background2.png')] bg-no-repeat bg-cover bg-center" />
 
