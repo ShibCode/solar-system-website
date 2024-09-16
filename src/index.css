@@ -6,6 +6,15 @@
 
 @layer base {
   #root {
-    @apply w-full h-[100dvh] text-white overflow-hidden relative;
+    @apply w-full h-[100dvh] text-white overflow-hidden relative isolate flex flex-col;
   }
+}
+
+.hide-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.hide-scroll {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

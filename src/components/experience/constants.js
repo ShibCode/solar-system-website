@@ -71,3 +71,9 @@ export const ORBIT_SCALE_UP_COMPLETE_DURATION =
   INITIAL_DELAY;
 
 export const PLANET_FADE_IN_DURATION = 0.6;
+
+export const ZOOM_IN_DURATION = 1.5;
+export const ZOOM_OUT_DURATION = 1;
+
+export const ZOOM_IN_DELAY = 0.1;
+export const ZOOM_OUT_DELAY = 0;

@@ -18,9 +18,7 @@ const Footer = () => {
       ref={wrapper}
       className="fixed left-1/2 -translate-x-1/2 bottom-5 flex flex-col items-center gap-2"
     >
-      <h2 className="item-slide slide-up text-lg font-code font-semibold">
-        Powered By
-      </h2>
+      <h2 className="item-slide slide-up text-lg font-semibold">Powered By</h2>
 
       <div className="flex gap-14 items-center">
         <img

@@ -3,49 +3,64 @@ import gsap from "gsap";
 import {
   ORBIT_SCALE_UP_COMPLETE_DURATION,
   PLANET_FADE_IN_DURATION,
+  ZOOM_IN_DELAY,
+  ZOOM_IN_DURATION,
 } from "../components/experience/constants";
 import { useSelector } from "react-redux";
 import useUpdateEffect from "../hooks/useUpdateEffect";
 
-const Navigation = () => {
+const Navigation = ({ label, navigationLinks }) => {
   const wrapper = useRef();
   const line = useRef();
-  const home = useRef();
-  const zero = useRef();
-  const one = useRef();
 
   const { focusedPlanet } = useSelector((state) => state.orbit);
 
   useUpdateEffect(() => {
-    if (focusedPlanet) gsap.to(wrapper.current, { x: 120, duration: 0.3 });
-    else gsap.to(wrapper.current, { x: 0, duration: 0.3, delay: 0.7 });
+    if (focusedPlanet?.object.userData.label === label)
+      gsap.to(wrapper.current, { x: 0, duration: 0.3, delay: 0.7 });
+    else gsap.to(wrapper.current, { x: 120, duration: 0.3 });
   }, [focusedPlanet]);
 
   useEffect(() => {
     let BASE_DELAY =
       ORBIT_SCALE_UP_COMPLETE_DURATION + PLANET_FADE_IN_DURATION * 0.5;
-    // BASE_DELAY = 0;
+
+    if (label !== undefined)
+      BASE_DELAY = ZOOM_IN_DELAY + ZOOM_IN_DURATION - 0.5;
+
+    const linkNumbers = [
+      ...wrapper.current.querySelectorAll(".navigation-number"),
+    ];
+    const linkLabels = [
+      ...wrapper.current.querySelectorAll(".navigation-label"),
+    ];
+
+    gsap.set([...linkLabels.slice(1), ...linkNumbers.slice(1, -1)], {
+      opacity: 0,
+      pointerEvents: "none",
+    });
 
     gsap.fromTo(
-      zero.current,
+      [linkNumbers[0], linkNumbers[linkNumbers.length - 1]],
       { opacity: 0 },
       {
         opacity: 1,
         duration: 1,
         ease: "power2.out",
         delay: BASE_DELAY,
+        stagger: 1,
       }
     );
 
     gsap.fromTo(
-      home.current,
+      linkLabels[0],
       { opacity: 0, y: 40 },
       {
         opacity: 1,
-        y: 0,
         duration: 1,
         ease: "power2.out",
         delay: BASE_DELAY,
+        y: 0,
       }
     );
 
@@ -59,49 +74,169 @@ const Navigation = () => {
         delay: BASE_DELAY + 0.25,
       }
     );
+  }, []);
+
+  const expandNav = () => {
+    const linkNumbers = [
+      ...wrapper.current.querySelectorAll(".navigation-number"),
+    ];
+    const linkLabels = [
+      ...wrapper.current.querySelectorAll(".navigation-label"),
+    ];
+
+    gsap.to(line.current, {
+      scaleY: 0,
+      duration: 0.5,
+      ease: "power2.out",
+    });
+
+    gsap.to(linkNumbers.slice(-1), {
+      opacity: 0,
+      duration: 0.5,
+      ease: "power2.out",
+    });
 
     gsap.fromTo(
-      one.current,
-      { opacity: 0 },
+      linkLabels.slice(1),
+      { opacity: 0, x: -20 },
       {
         opacity: 1,
-        duration: 1,
+        x: 0,
         ease: "power2.out",
-        delay: BASE_DELAY + 1,
+        stagger: 0.1,
+        delay: 0.25,
+        pointerEvents: "auto",
       }
     );
-  }, []);
+
+    gsap.fromTo(
+      linkNumbers.slice(1, -1),
+      { opacity: 0, x: 20 },
+      {
+        opacity: 1,
+        x: 0,
+        ease: "power2.out",
+        stagger: 0.1,
+        delay: 0.3,
+        pointerEvents: "auto",
+      }
+    );
+  };
+
+  const collapseNav = () => {
+    const linkNumbers = [
+      ...wrapper.current.querySelectorAll(".navigation-number"),
+    ];
+    const linkLabels = [
+      ...wrapper.current.querySelectorAll(".navigation-label"),
+    ];
+
+    gsap.to(line.current, {
+      scaleY: 1,
+      duration: 0.5,
+      ease: "power2.out",
+      delay: 0.1,
+    });
+
+    gsap.to(linkNumbers.slice(-1), {
+      opacity: 1,
+      duration: 0.25,
+      ease: "power2.out",
+      delay: 0,
+    });
+
+    gsap.to([...linkLabels.slice(1), ...linkNumbers.slice(1, -1)], {
+      opacity: 0,
+      duration: 0.35,
+      ease: "power2.out",
+      pointerEvents: "none",
+    });
+  };
 
   return (
     <div
       ref={wrapper}
-      className="absolute bottom-5 right-5 font-code font-semibold text-end flex flex-col !leading-none text-lg h-[12em] whitespace-nowrap justify-between"
+      onMouseEnter={expandNav}
+      onMouseLeave={collapseNav}
+      className="fixed bottom-5 right-5 font-semibold flex items-end !leading-none text-lg h-[11em] whitespace-nowrap gap-4"
     >
-      <div
-        ref={line}
-        style={{
-          translate: "-50% -50%",
-        }}
-        className="border border-white h-[calc(100%*4/6)] bg-white absolute top-1/2 left-1/2 origin-top"
-      />
+      {navigationLinks ? (
+        <>
+          <div className="h-full flex flex-col items-end">
+            {navigationLinks.map((link, i) => (
+              <div
+                key={i}
+                className="relative h-[calc(100%/5)] flex items-center cursor-pointer"
+              >
+                <span
+                  className={`navigation-label ${
+                    focusedPlanet?.object.userData.label === link.label
+                      ? "text-[#fff]"
+                      : "text-[#767676]"
+                  }`}
+                >
+                  {link.label}
+                </span>
+              </div>
+            ))}
+          </div>
+          <div className="relative h-full">
+            <div
+              ref={line}
+              style={{
+                translate: "-50% -50%",
+              }}
+              className="border border-white h-[calc(61%)] bg-white absolute top-1/2 left-1/2 origin-top"
+            />
 
-      <div className="relative h-[calc(100%/6)] flex items-center">
-        <span
-          ref={home}
-          className="inline-block absolute right-[calc(100%+14px)]"
-        >
-          Home
-        </span>
-        <span ref={zero} className="inline-block">
-          00
-        </span>
-      </div>
+            {navigationLinks.map((link, i) => (
+              <div
+                key={i}
+                className={`relative h-[calc(100%/5)] flex items-center cursor-pointer ${
+                  focusedPlanet?.object.userData.label === link.label
+                    ? "text-[#fff]"
+                    : "text-[#767676]"
+                }`}
+              >
+                <span className="inline-block navigation-number">
+                  {i.toString().padStart(2, "0")}
+                </span>
+              </div>
+            ))}
 
-      <div className="relative h-[calc(100%/6)] flex items-center">
-        <span ref={one} className="inline-block">
-          01
-        </span>
-      </div>
+            <div className="absolute h-[calc(100%/5)] flex items-center bottom-0">
+              <span className="inline-block navigation-number">
+                {(navigationLinks.length - 1).toString().padStart(2, "0")}
+              </span>
+            </div>
+          </div>
+        </>
+      ) : (
+        <>
+          <div className="h-full flex flex-col justify-between">
+            <div className="relative h-[calc(100%/5)] flex items-center">
+              <span className="navigation-label">Home</span>
+            </div>
+          </div>
+          <div className="relative h-full flex flex-col justify-between">
+            <div
+              ref={line}
+              style={{
+                translate: "-50% -50%",
+              }}
+              className="border border-white h-[calc(61%)] bg-white absolute top-1/2 left-1/2 origin-top"
+            />
+
+            <div className="relative h-[calc(100%/5)] flex items-center">
+              <span className="inline-block navigation-number">00</span>
+            </div>
+
+            <div className="relative h-[calc(100%/5)] flex items-center">
+              <span className="inline-block navigation-number">01</span>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };

@@ -1,38 +1,37 @@
-import React, {
-  forwardRef,
-  useEffect,
-  useImperativeHandle,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
-import { Html } from "@react-three/drei";
-import { orbits, planets } from "./constants";
+import React, { useEffect, useMemo, useRef } from "react";
+import {
+  orbits,
+  planets,
+  ZOOM_IN_DELAY,
+  ZOOM_IN_DURATION,
+  ZOOM_OUT_DELAY,
+  ZOOM_OUT_DURATION,
+} from "./constants";
 import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import gsap from "gsap";
 import Orbit from "./Orbit";
 import Planet from "./Planet";
 import {
-  setFocusedPlanet,
   setHoveredPlanet,
   toggleIsChangingZoom,
+  updateFocusedPlanet,
 } from "../../features/orbitSlice/orbitSlice";
 import { useDispatch, useSelector } from "react-redux";
+import useUpdateEffect from "../../hooks/useUpdateEffect";
 
-// Aspect ratio used for orbit calculation
-const ASPECT = 0.25;
+const ASPECT = 0.25; // Aspect ratio used for orbit calculation
 
 const Planets = () => {
-  const { hoveredPlanet, focusedPlanet, isChangingZoom } = useSelector(
-    (state) => state.orbit
-  );
+  const { focusedPlanet } = useSelector((state) => state.orbit);
   const dispatch = useDispatch();
 
   const { camera } = useThree();
 
   const groupRef = useRef(); // Reference to the group containing all planets and orbits
   const planetMeshes = useRef([]); // Reference array to store the meshes of planets for raycasting
+
+  const hoveredPlanetRef = useRef(null); // To prevent a rerender each frame by using it as a check in useFrame
 
   const raycaster = useMemo(() => new THREE.Raycaster(), []);
 
@@ -43,44 +42,54 @@ const Planets = () => {
   }); // update these values using gsap and map these over the whole group
 
   useEffect(() => {
-    const handleClick = () => {
-      dispatch(toggleIsChangingZoom());
+    const handleClick = () => dispatch(updateFocusedPlanet());
 
-      const { x, y } = hoveredPlanet.object.position;
-      const planetScale = hoveredPlanet.object.scale.x;
-
-      const focusScale = 9; // the scale when we are focused on one planet
-      const focusX = -x * focusScale + camera.left - 3.75 * planetScale;
-      const focusY = -y * focusScale;
-      y;
-
-      gsap.to(groupAttributes.current, {
-        scale: focusedPlanet ? 1 : focusScale,
-        positionX: focusedPlanet ? 0 : focusX,
-        positionY: focusedPlanet ? 0 : focusY,
-        duration: focusedPlanet ? 1 : 1.5,
-        delay: focusedPlanet ? 0 : 0.1,
-        ease: "power2.inOut",
-        onComplete: () => dispatch(toggleIsChangingZoom()),
-      });
-
-      if (focusedPlanet) dispatch(setFocusedPlanet(null));
-      else dispatch(setFocusedPlanet(hoveredPlanet));
-    };
-
-    if (!isChangingZoom && hoveredPlanet)
-      window.addEventListener("click", handleClick);
+    window.addEventListener("click", handleClick);
     return () => window.removeEventListener("click", handleClick);
-  }, [hoveredPlanet, isChangingZoom, focusedPlanet]);
+  }, []);
+
+  useUpdateEffect(() => {
+    dispatch(toggleIsChangingZoom()); // set the isChangingZoom state to true to disable interactions during the animation
+
+    let targetScale = 1;
+    let targetX = 0;
+    let targetY = 0;
+
+    if (focusedPlanet) {
+      const { x, y } = focusedPlanet.object.position;
+      const planetScale = focusedPlanet.object.scale.x;
+
+      // calculating the focus position
+      targetScale = 9;
+      targetX = -x * targetScale + camera.left - 3.75 * planetScale;
+      targetY = -y * targetScale - 0.4;
+    }
+
+    gsap.to(groupAttributes.current, {
+      scale: targetScale,
+      positionX: targetX,
+      positionY: targetY,
+      duration: focusedPlanet ? ZOOM_IN_DURATION : ZOOM_OUT_DURATION,
+      delay: focusedPlanet ? ZOOM_IN_DELAY : ZOOM_OUT_DELAY,
+      ease: "power2.inOut",
+      onComplete: () => dispatch(toggleIsChangingZoom()), // set the isChangingZoom state to false once the animation is complete
+    });
+  }, [focusedPlanet]);
 
   useFrame((state) => {
     // handle the raycasting for detecting the hovered planet
     raycaster.setFromCamera(state.pointer, state.camera);
     const intersects = raycaster.intersectObjects(planetMeshes.current);
 
-    if (intersects[0]) dispatch(setHoveredPlanet(intersects[0]));
-    else dispatch(setHoveredPlanet(null));
+    if (intersects[0] && !hoveredPlanetRef.current) {
+      dispatch(setHoveredPlanet(intersects[0]));
+      hoveredPlanetRef.current = intersects[0];
+    } else if (!intersects[0]) {
+      dispatch(setHoveredPlanet(null));
+      hoveredPlanetRef.current = null;
+    }
 
+    // this handles the zooming effect by enlarging the galaxy
     groupRef.current.scale.setScalar(groupAttributes.current.scale);
     groupRef.current.position.x = groupAttributes.current.positionX;
     groupRef.current.position.y = groupAttributes.current.positionY;

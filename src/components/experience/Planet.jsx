@@ -7,11 +7,15 @@ import {
   ORBIT_SCALE_UP_COMPLETE_DURATION,
   PLANET_FADE_IN_DURATION,
 } from "./constants";
+import useUpdateEffect from "../../hooks/useUpdateEffect";
+import { useSelector } from "react-redux";
 
 const Planet = forwardRef(({ planet, orbit, points, mesh, index }, ref) => {
   const [posX, posY] = Object.values(points.getPoint(planet.positionIndex));
 
   const [label, setLabel] = useState(null);
+
+  const { focusedPlanet } = useSelector((state) => state.orbit);
 
   const labelRef = useRef();
 
@@ -40,14 +44,20 @@ const Planet = forwardRef(({ planet, orbit, points, mesh, index }, ref) => {
     if (label)
       gsap.fromTo(
         label,
-        { opacity: 0 },
+        { opacity: 0, y: 20 },
         {
           opacity: 1,
+          y: 0,
           duration: 0.5,
           delay: ORBIT_SCALE_UP_COMPLETE_DURATION + 0.3,
         }
       );
   }, [label]);
+
+  useUpdateEffect(() => {
+    if (focusedPlanet) gsap.to(label, { opacity: 0, duration: 0.3 });
+    else gsap.to(label, { opacity: 1, duration: 0.3, delay: 0.7 });
+  }, [focusedPlanet]);
 
   const firstPlanetPositionIndex = useRef(0);
 
@@ -82,6 +92,7 @@ const Planet = forwardRef(({ planet, orbit, points, mesh, index }, ref) => {
       ref={ref}
       scale={planet.size}
       position={[posX * orbit.scale, posY * orbit.scale, 0]}
+      userData={planet}
     >
       <sphereGeometry args={[1, 32, 32]} />
       <meshStandardMaterial color={planet.color} transparent />
@@ -92,7 +103,7 @@ const Planet = forwardRef(({ planet, orbit, points, mesh, index }, ref) => {
         position-y={-1 - 0.2 / planet.size}
         style={{ opacity: 0 }}
       >
-        <h2 className="text-white text-xl font-bold whitespace-nowrap planet-label font-code tracking-tight">
+        <h2 className="text-white text-xl font-bold whitespace-nowrap planet-label tracking-tight">
           {planet.label}
         </h2>
       </Html>

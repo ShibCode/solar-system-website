@@ -11,6 +11,8 @@ import {
   PLANET_FADE_IN_DURATION,
 } from "./components/experience/constants";
 import Navigation from "./layout/Navigation";
+import Services from "./pages/Services";
+import PageWrapper from "./PageWrapper";
 
 const App = () => {
   useEffect(() => {
@@ -38,10 +40,10 @@ const App = () => {
     <>
       <Leva collapsed hidden />
 
-      <div className="fixed inset-0 bg-[url('/background2.png')] bg-no-repeat bg-cover bg-center" />
+      <div className="fixed inset-0 bg-[url('/background2.png')] bg-no-repeat bg-cover bg-center -z-20" />
 
       <Canvas
-        className="!fixed inset-0"
+        className="!fixed inset-0 -z-10"
         camera={{ visible: false }}
         orthographic
       >
@@ -50,6 +52,11 @@ const App = () => {
       </Canvas>
 
       <Header />
+
+      <PageWrapper label="Services">
+        <Services />
+      </PageWrapper>
+
       <Footer />
       <Navigation />
     </>

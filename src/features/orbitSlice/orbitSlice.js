@@ -12,8 +12,11 @@ const orbitSlice = createSlice({
       state.hoveredPlanet = action.payload;
     },
 
-    setFocusedPlanet(state, action) {
-      state.focusedPlanet = action.payload;
+    updateFocusedPlanet(state) {
+      if (!state.hoveredPlanet) return;
+
+      if (state.focusedPlanet) state.focusedPlanet = null;
+      else state.focusedPlanet = state.hoveredPlanet;
     },
 
     toggleIsChangingZoom(state) {
@@ -22,7 +25,7 @@ const orbitSlice = createSlice({
   },
 });
 
-export const { setFocusedPlanet, setHoveredPlanet, toggleIsChangingZoom } =
+export const { updateFocusedPlanet, setHoveredPlanet, toggleIsChangingZoom } =
   orbitSlice.actions;
 
 export default orbitSlice.reducer;
