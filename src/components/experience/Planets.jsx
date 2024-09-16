@@ -82,9 +82,11 @@ const Planets = () => {
     const intersects = raycaster.intersectObjects(planetMeshes.current);
 
     if (intersects[0] && !hoveredPlanetRef.current) {
+      document.body.style.cursor = "pointer";
       dispatch(setHoveredPlanet(intersects[0]));
       hoveredPlanetRef.current = intersects[0];
     } else if (!intersects[0]) {
+      document.body.style.cursor = "default";
       dispatch(setHoveredPlanet(null));
       hoveredPlanetRef.current = null;
     }
