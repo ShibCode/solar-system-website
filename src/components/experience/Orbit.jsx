@@ -6,7 +6,7 @@ import {
   ORBIT_SCALE_UP_DURATION,
   ORBIT_SCALE_UP_STAGGER,
   orbits,
-} from "./constants";
+} from "../../constants";
 
 const Orbit = ({ path, scale, index }) => {
   const orbitRef = useRef();

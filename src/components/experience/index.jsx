@@ -3,29 +3,19 @@ import { useFrame, useThree } from "@react-three/fiber";
 import Lights from "./Lights";
 import Planets from "./Planets";
 import { Bloom, EffectComposer } from "@react-three/postprocessing";
+import { useAttributes } from "../../context/AttributesProvider";
 
-const CAMERA_SIZE = 4;
+export const CAMERA_SIZE = 4;
 
 const Experience = () => {
   const { camera } = useThree((state) => state);
-
-  useEffect(() => {
-    const aspect = window.innerWidth / window.innerHeight;
-
-    camera.top = CAMERA_SIZE;
-    camera.right = CAMERA_SIZE * aspect;
-    camera.bottom = -CAMERA_SIZE;
-    camera.left = -CAMERA_SIZE * aspect;
-    camera.updateProjectionMatrix();
-  }, []);
+  const { cameraAttributes } = useAttributes();
 
   useFrame(() => {
-    const aspect = window.innerWidth / window.innerHeight;
-
-    camera.top = CAMERA_SIZE;
-    camera.right = CAMERA_SIZE * aspect;
-    camera.bottom = -CAMERA_SIZE;
-    camera.left = -CAMERA_SIZE * aspect;
+    camera.top = cameraAttributes.top;
+    camera.bottom = cameraAttributes.bottom;
+    camera.left = cameraAttributes.left;
+    camera.right = cameraAttributes.right;
     camera.updateProjectionMatrix();
   });
 

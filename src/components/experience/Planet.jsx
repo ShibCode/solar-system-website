@@ -6,18 +6,23 @@ import {
   INITIAL_DELAY,
   ORBIT_SCALE_UP_COMPLETE_DURATION,
   PLANET_FADE_IN_DURATION,
-} from "./constants";
+} from "../../constants";
 import useUpdateEffect from "../../hooks/useUpdateEffect";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setHoveredPlanet } from "../../features/orbitSlice/orbitSlice";
 
-const Planet = forwardRef(({ planet, orbit, points, mesh, index }, ref) => {
+const Planet = forwardRef(({ page, orbit, points, mesh, index }, ref) => {
+  const { planet } = page;
+
   const [posX, posY] = Object.values(points.getPoint(planet.positionIndex));
 
   const [label, setLabel] = useState(null);
 
   const { focusedPlanet } = useSelector((state) => state.orbit);
+  const dispatch = useDispatch();
 
   const labelRef = useRef();
+  const moon = useRef();
 
   useEffect(() => {
     if (!mesh) return;
@@ -85,29 +90,51 @@ const Planet = forwardRef(({ planet, orbit, points, mesh, index }, ref) => {
       );
       mesh.position.set(posX * orbit.scale, posY * orbit.scale, 0);
     }
+
+    // if (moon.current) {
+    //   const elapsed = clock.getElapsedTime();
+    //   moon.current.position.x =
+    //     posX * orbit.scale +
+    //     planet.size * 2 * Math.cos((elapsed + index) * 0.25 * (index + 1));
+    //   moon.current.position.y =
+    //     posY * orbit.scale -
+    //     0.1 * (index + 1) * Math.sin((elapsed + index) * 0.25 * (index + 1));
+    //   moon.current.position.z = Math.sin(
+    //     (elapsed + index) * 0.25 * (index + 1)
+    //   );
+    // }
   });
 
   return (
-    <mesh
-      ref={ref}
-      scale={planet.size}
-      position={[posX * orbit.scale, posY * orbit.scale, 0]}
-      userData={planet}
-    >
-      <sphereGeometry args={[1, 32, 32]} />
-      <meshStandardMaterial color={planet.color} transparent />
-
-      <Html
-        ref={labelRef}
-        center
-        position-y={-1 - 0.2 / planet.size}
-        style={{ opacity: 0 }}
+    <>
+      <mesh
+        onPointerEnter={(e) => dispatch(setHoveredPlanet(e.object))}
+        onPointerLeave={() => dispatch(setHoveredPlanet(null))}
+        ref={ref}
+        scale={planet.size}
+        position={[posX * orbit.scale, posY * orbit.scale, 0]}
+        userData={page}
       >
-        <h2 className="text-white text-xl font-bold whitespace-nowrap planet-label tracking-tight">
-          {planet.label}
-        </h2>
-      </Html>
-    </mesh>
+        <sphereGeometry args={[1, 32, 32]} />
+        <meshStandardMaterial color={planet.color} transparent />
+
+        <Html
+          ref={labelRef}
+          center
+          position-y={-1 - 0.2 / planet.size}
+          style={{ opacity: 0 }}
+        >
+          <h2 className="text-white text-xl font-bold whitespace-nowrap planet-label tracking-tight">
+            {page.label}
+          </h2>
+        </Html>
+      </mesh>
+
+      {/* <mesh ref={moon} scale={planet.size / 2}>
+        <sphereGeometry args={[1, 32, 32]} />
+        <meshStandardMaterial color="#F6F1D5" />
+      </mesh> */}
+    </>
   );
 });
 

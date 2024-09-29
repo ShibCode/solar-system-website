@@ -8,13 +8,16 @@ import Footer from "./layout/Footer";
 import gsap from "gsap";
 import {
   ORBIT_SCALE_UP_COMPLETE_DURATION,
+  pages,
   PLANET_FADE_IN_DURATION,
-} from "./components/experience/constants";
+} from "./constants";
 import Navigation from "./layout/Navigation";
-import Services from "./pages/Services";
 import PageWrapper from "./PageWrapper";
+import { Flip } from "gsap/all";
 
 const App = () => {
+  gsap.registerPlugin(Flip);
+
   useEffect(() => {
     const items = document.querySelectorAll(".item-slide");
 
@@ -40,7 +43,7 @@ const App = () => {
     <>
       <Leva collapsed hidden />
 
-      <div className="fixed inset-0 bg-[url('/background2.png')] bg-no-repeat bg-cover bg-center -z-20" />
+      <div className="fixed inset-0 bg-[url('/background.png')] bg-no-repeat bg-cover bg-center -z-20" />
 
       <Canvas
         className="!fixed inset-0 -z-10"
@@ -53,9 +56,11 @@ const App = () => {
 
       <Header />
 
-      <PageWrapper label="Services">
-        <Services />
-      </PageWrapper>
+      {pages.map((page, i) => (
+        <PageWrapper key={i} page={page}>
+          <page.component />
+        </PageWrapper>
+      ))}
 
       <Footer />
       <Navigation />
