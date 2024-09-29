@@ -1,7 +1,9 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import useUpdateEffect from "../../hooks/useUpdateEffect";
 import gsap from "gsap";
 import projects from "../../data/projects.json";
+import { useAttributes } from "../../context/AttributesProvider";
+import { useSelector } from "react-redux";
 
 const DetailedProject = ({ isLearningMore, activeProject }) => {
   const wrapper = useRef();
@@ -26,6 +28,27 @@ const DetailedProject = ({ isLearningMore, activeProject }) => {
       });
     }
   }, [isLearningMore]);
+
+  const { setAttributes, attributes } = useAttributes();
+
+  const { focusedPlanet } = useSelector((state) => state.orbit);
+
+  useEffect(() => {
+    const wrapper = document.querySelector("#Projects");
+    const handleScroll = () => {
+      const maxScroll = wrapper.scrollHeight - wrapper.clientHeight;
+      const progress = Math.min(wrapper.scrollTop / maxScroll, 1);
+
+      setAttributes({
+        targetY:
+          (focusedPlanet.position.y * attributes.zoom + 0.6) * (2 - progress),
+        duration: 0,
+      });
+    };
+
+    wrapper.addEventListener("scroll", handleScroll);
+    return () => wrapper.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <div

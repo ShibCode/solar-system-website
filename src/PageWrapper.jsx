@@ -46,6 +46,7 @@ const PageLayout = ({ children, isActive, baseDelay, page }) => {
     return [links[index], ...links.slice(index + 1), ...links.slice(0, index)];
   }, []);
 
+  const wrapper = useRef();
   const main = useRef();
   const headingWrapper = useRef();
 
@@ -66,20 +67,25 @@ const PageLayout = ({ children, isActive, baseDelay, page }) => {
         callback(baseDelay);
       }
       return () => {
-        if (main.current)
+        if (main.current) {
           gsap.to(main.current, {
             y:
               -main.current.getBoundingClientRect().height - window.innerHeight,
             duration: 0.75,
             ease: "power1.out",
           });
+        }
       };
     }, [isActive]);
     return;
   };
 
   return (
-    <div className="pt-[160px] pb-[120px] gap-16 hide-scroll flex-1 overflow-auto flex flex-col items-center pointer-events-none">
+    <div
+      ref={wrapper}
+      id={page.label}
+      className="pt-[160px] pb-[120px] gap-16 hide-scroll h-full overflow-auto flex flex-col items-center pointer-events-none fixed w-full top-0"
+    >
       <Navigation label={page.label} navigationLinks={navigationLinks} />
       <div
         ref={main}
