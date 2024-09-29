@@ -55,6 +55,45 @@
     "images": ["/project.png"]
   },
   {
+    "name": "Portfolio",
+    "intro": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sint voluptates vitae deserunt quidem! Nisi, ipsum!",
+    "title": "Passport to Global Education",
+    "description": "FlyMasters is dedicated to helping students achieve their dream of studying abroad. We provide expert assistance with securing scholarships, loans, and navigating the entire study abroad process. Whether you need financial guidance or visa support, FlyMasters is your trusted partner for a smooth and successful international education journey.",
+    "techStack": [
+      {
+        "path": "/tech/vitejs.svg",
+        "name": "Vite",
+        "tooltip": "Streamlined development with fast builds and Hot Module Replacement for efficient front-end development."
+      },
+      {
+        "path": "/tech/react.svg",
+        "name": "React",
+        "tooltip": "Created reusable components to build dynamic, scalable user interfaces."
+      },
+      {
+        "path": "/tech/tailwindcss.svg",
+        "name": "Tailwind",
+        "tooltip": "Used a utility-first CSS approach for rapid, responsive design without custom CSS."
+      },
+      {
+        "path": "/tech/gsap.svg",
+        "name": "GSAP",
+        "tooltip": "Implemented smooth, high-performance animations and transitions for a polished UI."
+      },
+      {
+        "path": "/tech/threejs.svg",
+        "name": "Threejs",
+        "tooltip": "Built interactive 3D graphics, enhancing user experience with immersive visuals."
+      },
+      {
+        "path": "/tech/redux.svg",
+        "name": "Redux",
+        "tooltip": "Managed global state efficiently, ensuring predictable state changes across the app."
+      }
+    ],
+    "images": ["/project.png"]
+  },
+  {
     "name": "Monkeytype",
     "intro": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sint voluptates vitae deserunt quidem! Nisi, ipsum!",
     "title": "Passport to Global Education",

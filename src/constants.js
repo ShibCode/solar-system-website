@@ -43,7 +43,7 @@ export const pages = [
   },
   {
     label: "News",
-    subheading: "Latest updates",
+    subheading: "Updates",
     component: News,
     planet: {
       size: 0.25,

@@ -53,7 +53,7 @@ const DetailedProject = ({ isLearningMore, activeProject }) => {
     <div
       ref={wrapper}
       style={{ maxHeight: 0 }} // to avoid scroll when not opened
-      className={`flex flex-col gap-10 items-center w-full absolute top-0 pb-[120px] overflow-hidden ${
+      className={`flex flex-col gap-10 items-center w-full absolute top-0 pb-[calc(50vh-183px)] overflow-hidden ${
         isLearningMore ? "pointer-events-auto" : "pointer-events-none"
       }`}
     >
@@ -89,7 +89,16 @@ const DetailedProject = ({ isLearningMore, activeProject }) => {
 
             <div className="flex gap-2 detailed-project-item">
               {projects[activeProject].techStack.map((tech, i) => (
-                <div className="!leading-none px-4 py-2 bg-black text-text-white rounded-md font-semibold text-lg flex items-center gap-2.5 cursor-pointer hover:![scale:1.05] transition-[scale,background-color] duration-300 hover:bg-[#0a0a0a]">
+                <div
+                  key={i}
+                  className="!leading-none px-4 py-2 bg-black text-text-white rounded-md font-semibold text-lg flex items-center gap-2.5 cursor-pointer transition-[background-color] duration-300 hover:bg-[#0f0f0f] relative group"
+                >
+                  {tech.tooltip && (
+                    <div className="absolute left-1/2 -translate-x-1/2 bottom-full -translate-y-2 bg-black before:absolute before:w-0 before:h-0 before:border-l-8 before:border-r-8 before:border-t-8 before:border-transparent before:border-t-black before:top-full before:left-1/2 before:-translate-x-1/2 opacity-0 group-hover:opacity-100 group-hover:-translate-y-3 transition-all duration-300 w-[400px] text-sm px-3 py-2.5 leading-[1.25] text-start pointer-events-none group-hover:pointer-events-auto cursor-auto after:absolute after:w-full after:h-4 after:top-full after:left-0">
+                      {tech.tooltip}
+                    </div>
+                  )}
+
                   <img src={tech.path} className="size-[21px]" />
                   {tech.name}
                 </div>

@@ -55,6 +55,7 @@ const Navigation = ({ label, navigationLinks }) => {
         stagger: 1,
         onComplete: () => {
           isAnimatingIn.current = false;
+          wrapper.current.style.pointerEvents = "auto";
         },
       }
     );
@@ -87,25 +88,6 @@ const Navigation = ({ label, navigationLinks }) => {
   const isCheckingEachFrameForHover = useRef(false);
 
   const expandNav = () => {
-    if (isAnimatingIn.current) {
-      isCheckingEachFrameForHover.current = true;
-
-      const checkIfIsStillAnimatingIn = () => {
-        if (!isCheckingEachFrameForHover.current) return;
-
-        if (isAnimatingIn.current)
-          requestAnimationFrame(checkIfIsStillAnimatingIn);
-        else {
-          expandNav();
-          isCheckingEachFrameForHover.current = false;
-        }
-      };
-
-      requestAnimationFrame(checkIfIsStillAnimatingIn);
-
-      return;
-    }
-
     if (tweens.current) {
       tweens.current.forEach((t) => t.pause());
       tweens.current = null;
@@ -214,7 +196,8 @@ const Navigation = ({ label, navigationLinks }) => {
       ref={wrapper}
       onMouseEnter={expandNav}
       onMouseLeave={collapseNav}
-      className="fixed bottom-5 right-5 font-semibold flex !leading-none text-lg h-[11em] whitespace-nowrap gap-4 pointer-events-auto"
+      style={{ pointerEvents: "none" }}
+      className="fixed bottom-5 right-5 font-semibold flex !leading-none text-lg h-[11em] whitespace-nowrap gap-4"
     >
       <div className="absolute right-[10.8px] h-[65%] translate-x-1/2 -translate-y-1/2 top-1/2">
         <div ref={line} className="w-0.5 h-full bg-white origin-top" />

@@ -7,12 +7,15 @@ import ProjectsList from "./ProjectsList";
 import SummarisedProject from "./SummarisedProject";
 import DetailedProject from "./DetailedProject";
 import gsap from "gsap";
+import { useSelector } from "react-redux";
 
 const Projects = ({ useOnActive }) => {
   const [isLearningMore, setIsLearningMore] = useState(false);
   const [activeProject, setActiveProject] = useState(2);
 
   const { attributes, setAttributes, cameraAttributes } = useAttributes();
+
+  const { focusedPlanet } = useSelector((state) => state.orbit);
 
   const main = useRef();
 
@@ -44,7 +47,7 @@ const Projects = ({ useOnActive }) => {
 
       setAttributes({
         targetX: attributes.x + cameraAttributes[side] - offset * size,
-        targetY: attributes.y - cameraAttributes.bottom,
+        targetY: focusedPlanet.position.y * attributes.zoom * 2,
         duration: 1,
       });
     }
