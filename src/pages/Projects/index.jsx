@@ -62,6 +62,7 @@ const Projects = ({ useOnActive }) => {
 
     const name = document.querySelector(".project-name");
     const learn = document.querySelector(".project-learn-more");
+    const learnMoreTexts = learn.querySelectorAll("span");
 
     const nameState = Flip.getState(name);
     const learnState = Flip.getState(learn);
@@ -69,9 +70,15 @@ const Projects = ({ useOnActive }) => {
     if (isLearningMore) {
       nameWrapper2.appendChild(name);
       learnWrapper2.appendChild(learn);
+
+      gsap.to(learnMoreTexts[0], { opacity: 0, delay: 0.25, duration: 0.75 });
+      gsap.to(learnMoreTexts[1], { opacity: 1, delay: 0.25, duration: 0.75 });
     } else {
       nameWrapper1.appendChild(name);
       learnWrapper1.appendChild(learn);
+
+      gsap.to(learnMoreTexts[0], { opacity: 1, delay: 0.25, duration: 0.75 });
+      gsap.to(learnMoreTexts[1], { opacity: 0, delay: 0.25, duration: 0.75 });
     }
 
     Flip.from(nameState, { delay: 0.25, duration: 0.75 });

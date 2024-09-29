@@ -39,9 +39,15 @@ const SummarisedProject = ({
         <div className="project-learn-more-wrapper h-[24px]">
           <button
             onClick={handleLearnMore}
-            className="text-orange-600 border-b border-orange-600 !leading-[1.1] project-learn-more"
+            className="text-orange-600 !leading-[1.1] project-learn-more whitespace-nowrap relative"
           >
-            Learn More
+            <span className={`border-b border-orange-600`}>Learn More</span>
+            <span
+              style={{ opacity: 0 }}
+              className={`absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 border-b border-orange-600`}
+            >
+              Go Back
+            </span>
           </button>
         </div>
       </div>

@@ -66,16 +66,16 @@ const PageLayout = ({ children, isActive, baseDelay, page }) => {
         );
         callback(baseDelay);
       }
-      return () => {
-        if (main.current) {
-          gsap.to(main.current, {
-            y:
-              -main.current.getBoundingClientRect().height - window.innerHeight,
-            duration: 0.75,
-            ease: "power1.out",
-          });
-        }
-      };
+      // return () => {
+      //   if (main.current) {
+      //     gsap.to(main.current, {
+      //       y:
+      //         -main.current.getBoundingClientRect().height - window.innerHeight,
+      //       duration: 0.75,
+      //       ease: "power1.out",
+      //     });
+      //   }
+      // };
     }, [isActive]);
     return;
   };

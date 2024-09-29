@@ -2,7 +2,7 @@ import React from "react";
 
 const Header = () => {
   return (
-    <div className="absolute w-full top-0 left-0 flex justify-between items-center p-6">
+    <div className="absolute w-full top-0 left-0 flex justify-between items-center p-6 z-10">
       <div className="item-slide flex flex-col items-center gap-[1px]">
         <img src="/logo.svg" alt="" className="w-11" />
         <span className="uppercase font-bold text-sm">Mastermind</span>

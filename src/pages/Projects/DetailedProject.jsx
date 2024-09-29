@@ -40,8 +40,7 @@ const DetailedProject = ({ isLearningMore, activeProject }) => {
       const progress = Math.min(wrapper.scrollTop / maxScroll, 1);
 
       setAttributes({
-        targetY:
-          (focusedPlanet.position.y * attributes.zoom + 0.6) * (2 - progress),
+        targetY: focusedPlanet.position.y * attributes.zoom * (2 - progress),
         duration: 0,
       });
     };
@@ -59,9 +58,9 @@ const DetailedProject = ({ isLearningMore, activeProject }) => {
       }`}
     >
       <div className={`flex flex-col gap-4 items-center`}>
-        <div className="project-name-wrapper text-3xl h-[1em]"></div>
-
         <div className="project-learn-more-wrapper h-[24px]"></div>
+
+        <div className="project-name-wrapper text-3xl h-[1em]"></div>
 
         <div className={`flex flex-col items-center gap-10 mt-4`}>
           <div className="flex flex-col items-center justify-center text-center gap-3">
@@ -101,7 +100,7 @@ const DetailedProject = ({ isLearningMore, activeProject }) => {
       </div>
 
       <div
-        className={`aspect-[1600/900] flex items-center justify-center w-1/2`}
+        className={`aspect-[1600/900] flex items-center justify-center w-full max-w-[650px]`}
       >
         <img
           style={{ opacity: 0 }}
