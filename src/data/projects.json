@@ -1,0 +1,70 @@
+[
+  {
+    "name": "Mars Reject",
+    "intro": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sint voluptates vitae deserunt quidem! Nisi, ipsum!",
+    "title": "Passport to Global Education",
+    "description": "FlyMasters is dedicated to helping students achieve their dream of studying abroad. We provide expert assistance with securing scholarships, loans, and navigating the entire study abroad process. Whether you need financial guidance or visa support, FlyMasters is your trusted partner for a smooth and successful international education journey.",
+    "techStack": [
+      { "path": "/tech/vitejs.svg", "name": "Vite" },
+      { "path": "/tech/react.svg", "name": "React" },
+      { "path": "/tech/tailwindcss.svg", "name": "Tailwind" },
+      { "path": "/tech/gsap.svg", "name": "GSAP" }
+    ],
+    "images": ["/project.png"]
+  },
+  {
+    "name": "Sombra",
+    "intro": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sint voluptates vitae deserunt quidem! Nisi, ipsum!",
+    "title": "Passport to Global Education",
+    "description": "FlyMasters is dedicated to helping students achieve their dream of studying abroad. We provide expert assistance with securing scholarships, loans, and navigating the entire study abroad process. Whether you need financial guidance or visa support, FlyMasters is your trusted partner for a smooth and successful international education journey.",
+    "techStack": [
+      { "path": "/tech/vitejs.svg", "name": "Vite" },
+      { "path": "/tech/react.svg", "name": "React" },
+      { "path": "/tech/tailwindcss.svg", "name": "Tailwind" },
+      { "path": "/tech/gsap.svg", "name": "GSAP" },
+      { "path": "/tech/threejs.svg", "name": "Threejs" }
+    ],
+    "images": ["/project.png"]
+  },
+  {
+    "name": "Flymasters",
+    "intro": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sint voluptates vitae deserunt quidem! Nisi, ipsum!",
+    "title": "Passport to Global Education",
+    "description": "FlyMasters is dedicated to helping students achieve their dream of studying abroad. We provide expert assistance with securing scholarships, loans, and navigating the entire study abroad process. Whether you need financial guidance or visa support, FlyMasters is your trusted partner for a smooth and successful international education journey.",
+    "techStack": [
+      { "path": "/tech/vitejs.svg", "name": "Vite" },
+      { "path": "/tech/react.svg", "name": "React" },
+      { "path": "/tech/tailwindcss.svg", "name": "Tailwind" },
+      { "path": "/tech/gsap.svg", "name": "GSAP" },
+      { "path": "/tech/framer.svg", "name": "Framer" }
+    ],
+    "images": ["/project.png"]
+  },
+  {
+    "name": "Shardeum",
+    "intro": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sint voluptates vitae deserunt quidem! Nisi, ipsum!",
+    "title": "Passport to Global Education",
+    "description": "FlyMasters is dedicated to helping students achieve their dream of studying abroad. We provide expert assistance with securing scholarships, loans, and navigating the entire study abroad process. Whether you need financial guidance or visa support, FlyMasters is your trusted partner for a smooth and successful international education journey.",
+    "techStack": [
+      { "path": "/tech/vitejs.svg", "name": "Vite" },
+      { "path": "/tech/react.svg", "name": "React" },
+      { "path": "/tech/tailwindcss.svg", "name": "Tailwind" },
+      { "path": "/tech/gsap.svg", "name": "GSAP" },
+      { "path": "/tech/framer.svg", "name": "Framer" }
+    ],
+    "images": ["/project.png"]
+  },
+  {
+    "name": "Monkeytype",
+    "intro": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sint voluptates vitae deserunt quidem! Nisi, ipsum!",
+    "title": "Passport to Global Education",
+    "description": "FlyMasters is dedicated to helping students achieve their dream of studying abroad. We provide expert assistance with securing scholarships, loans, and navigating the entire study abroad process. Whether you need financial guidance or visa support, FlyMasters is your trusted partner for a smooth and successful international education journey.",
+    "techStack": [
+      { "path": "/tech/nextjs.svg", "name": "NextJS" },
+      { "path": "/tech/mongodb.svg", "name": "Mongodb" },
+      { "path": "/tech/tailwindcss.svg", "name": "Tailwind" },
+      { "path": "/tech/chartjs.svg", "name": "ChartJS" }
+    ],
+    "images": ["/project.png"]
+  }
+]

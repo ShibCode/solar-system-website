@@ -5,7 +5,7 @@ import {
   PLANET_FADE_IN_DURATION,
   ZOOM_IN_DELAY,
   ZOOM_IN_DURATION,
-} from "../components/experience/constants";
+} from "../constants";
 import { useSelector } from "react-redux";
 import useUpdateEffect from "../hooks/useUpdateEffect";
 
@@ -13,15 +13,19 @@ const Navigation = ({ label, navigationLinks }) => {
   const wrapper = useRef();
   const line = useRef();
 
+  const isAnimatingIn = useRef(false);
+
   const { focusedPlanet } = useSelector((state) => state.orbit);
 
   useUpdateEffect(() => {
-    if (focusedPlanet?.object.userData.label === label)
+    if (focusedPlanet?.userData.label === label)
       gsap.to(wrapper.current, { x: 0, duration: 0.3, delay: 0.7 });
-    else gsap.to(wrapper.current, { x: 120, duration: 0.3 });
+    else gsap.to(wrapper.current, { x: 150, duration: 0.3 });
   }, [focusedPlanet]);
 
   useEffect(() => {
+    isAnimatingIn.current = true;
+
     let BASE_DELAY =
       ORBIT_SCALE_UP_COMPLETE_DURATION + PLANET_FADE_IN_DURATION * 0.5;
 
@@ -49,6 +53,9 @@ const Navigation = ({ label, navigationLinks }) => {
         ease: "power2.out",
         delay: BASE_DELAY,
         stagger: 1,
+        onComplete: () => {
+          isAnimatingIn.current = false;
+        },
       }
     );
 
@@ -76,7 +83,34 @@ const Navigation = ({ label, navigationLinks }) => {
     );
   }, []);
 
+  const tweens = useRef(null);
+  const isCheckingEachFrameForHover = useRef(false);
+
   const expandNav = () => {
+    if (isAnimatingIn.current) {
+      isCheckingEachFrameForHover.current = true;
+
+      const checkIfIsStillAnimatingIn = () => {
+        if (!isCheckingEachFrameForHover.current) return;
+
+        if (isAnimatingIn.current)
+          requestAnimationFrame(checkIfIsStillAnimatingIn);
+        else {
+          expandNav();
+          isCheckingEachFrameForHover.current = false;
+        }
+      };
+
+      requestAnimationFrame(checkIfIsStillAnimatingIn);
+
+      return;
+    }
+
+    if (tweens.current) {
+      tweens.current.forEach((t) => t.pause());
+      tweens.current = null;
+    }
+
     const linkNumbers = [
       ...wrapper.current.querySelectorAll(".navigation-number"),
     ];
@@ -84,46 +118,60 @@ const Navigation = ({ label, navigationLinks }) => {
       ...wrapper.current.querySelectorAll(".navigation-label"),
     ];
 
-    gsap.to(line.current, {
+    const commons = {
+      ease: "power2.out",
+      onComplete: function () {
+        tweens.current = tweens.current.filter((t) => t !== this);
+      },
+    };
+
+    const t1 = gsap.to(line.current, {
       scaleY: 0,
-      duration: 0.5,
-      ease: "power2.out",
+      ...commons,
     });
 
-    gsap.to(linkNumbers.slice(-1), {
+    const t2 = gsap.to(linkNumbers.slice(-1), {
       opacity: 0,
-      duration: 0.5,
-      ease: "power2.out",
+      ...commons,
     });
 
-    gsap.fromTo(
+    const t3 = gsap.fromTo(
       linkLabels.slice(1),
       { opacity: 0, x: -20 },
       {
         opacity: 1,
         x: 0,
-        ease: "power2.out",
         stagger: 0.1,
         delay: 0.25,
         pointerEvents: "auto",
+        ...commons,
       }
     );
 
-    gsap.fromTo(
+    const t4 = gsap.fromTo(
       linkNumbers.slice(1, -1),
       { opacity: 0, x: 20 },
       {
         opacity: 1,
         x: 0,
-        ease: "power2.out",
         stagger: 0.1,
         delay: 0.3,
         pointerEvents: "auto",
+        ...commons,
       }
     );
+
+    tweens.current = [t1, t2, t3, t4];
   };
 
   const collapseNav = () => {
+    isCheckingEachFrameForHover.current = false;
+
+    if (tweens.current) {
+      tweens.current.forEach((t) => t.pause());
+      tweens.current = null;
+    }
+
     const linkNumbers = [
       ...wrapper.current.querySelectorAll(".navigation-number"),
     ];
@@ -131,26 +179,34 @@ const Navigation = ({ label, navigationLinks }) => {
       ...wrapper.current.querySelectorAll(".navigation-label"),
     ];
 
-    gsap.to(line.current, {
-      scaleY: 1,
-      duration: 0.5,
+    const commons = {
       ease: "power2.out",
+      onComplete: function () {
+        tweens.current = tweens.current.filter((t) => t !== this);
+      },
+    };
+
+    const t1 = gsap.to(line.current, {
+      scaleY: 1,
       delay: 0.1,
+      ...commons,
     });
 
-    gsap.to(linkNumbers.slice(-1), {
+    const t2 = gsap.to(linkNumbers.slice(-1), {
       opacity: 1,
       duration: 0.25,
-      ease: "power2.out",
       delay: 0,
+      ...commons,
     });
 
-    gsap.to([...linkLabels.slice(1), ...linkNumbers.slice(1, -1)], {
+    const t3 = gsap.to([...linkLabels.slice(1), ...linkNumbers.slice(1, -1)], {
       opacity: 0,
       duration: 0.35,
-      ease: "power2.out",
       pointerEvents: "none",
+      ...commons,
     });
+
+    tweens.current = [t1, t2, t3];
   };
 
   return (
@@ -158,47 +214,31 @@ const Navigation = ({ label, navigationLinks }) => {
       ref={wrapper}
       onMouseEnter={expandNav}
       onMouseLeave={collapseNav}
-      className="fixed bottom-5 right-5 font-semibold flex items-end !leading-none text-lg h-[11em] whitespace-nowrap gap-4"
+      className="fixed bottom-5 right-5 font-semibold flex !leading-none text-lg h-[11em] whitespace-nowrap gap-4 pointer-events-auto"
     >
+      <div className="absolute right-[10.8px] h-[65%] translate-x-1/2 -translate-y-1/2 top-1/2">
+        <div ref={line} className="w-0.5 h-full bg-white origin-top" />
+      </div>
+
       {navigationLinks ? (
         <>
           <div className="h-full flex flex-col items-end">
             {navigationLinks.map((link, i) => (
               <div
+                onClick={link.onClick}
                 key={i}
-                className="relative h-[calc(100%/5)] flex items-center cursor-pointer"
-              >
-                <span
-                  className={`navigation-label ${
-                    focusedPlanet?.object.userData.label === link.label
-                      ? "text-[#fff]"
-                      : "text-[#767676]"
-                  }`}
-                >
-                  {link.label}
-                </span>
-              </div>
-            ))}
-          </div>
-          <div className="relative h-full">
-            <div
-              ref={line}
-              style={{
-                translate: "-50% -50%",
-              }}
-              className="border border-white h-[calc(61%)] bg-white absolute top-1/2 left-1/2 origin-top"
-            />
-
-            {navigationLinks.map((link, i) => (
-              <div
-                key={i}
-                className={`relative h-[calc(100%/5)] flex items-center cursor-pointer ${
-                  focusedPlanet?.object.userData.label === link.label
-                    ? "text-[#fff]"
-                    : "text-[#767676]"
+                className={`relative h-[calc(100%/5)] flex items-center gap-3 z-10 cursor-pointer ${
+                  i === 0 ? "text-[#fff]" : "text-[#767676]"
                 }`}
               >
-                <span className="inline-block navigation-number">
+                <span style={{ opacity: 0 }} className="navigation-label">
+                  {link.label}
+                </span>
+
+                <span
+                  style={{ opacity: 0 }}
+                  className="inline-block navigation-number"
+                >
                   {i.toString().padStart(2, "0")}
                 </span>
               </div>
