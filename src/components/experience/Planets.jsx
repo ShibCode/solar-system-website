@@ -51,11 +51,11 @@ const Planets = () => {
 
     if (focusedPlanet) {
       const { x, y } = focusedPlanet.position;
-      const { side, offset, size } = focusedPlanet.userData.planet;
+      const { side, offset, size, zoomIndex } = focusedPlanet.userData.planet;
 
       // calculating the focus position
-      targetZoom = 9;
-      targetX = x * targetZoom - camera[side] + offset * size;
+      targetZoom = 9 * (zoomIndex ?? 1);
+      targetX = x * targetZoom - (camera[side] ?? 0) + offset * size;
       targetY = y * targetZoom + 0.4;
     }
 

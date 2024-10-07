@@ -1,79 +1,127 @@
 [
   {
     "name": "Mars Reject",
-    "intro": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sint voluptates vitae deserunt quidem! Nisi, ipsum!",
-    "title": "Passport to Global Education",
-    "description": "FlyMasters is dedicated to helping students achieve their dream of studying abroad. We provide expert assistance with securing scholarships, loans, and navigating the entire study abroad process. Whether you need financial guidance or visa support, FlyMasters is your trusted partner for a smooth and successful international education journey.",
-    "techStack": [
-      { "path": "/tech/vitejs.svg", "name": "Vite" },
-      { "path": "/tech/react.svg", "name": "React" },
-      { "path": "/tech/tailwindcss.svg", "name": "Tailwind" },
-      { "path": "/tech/gsap.svg", "name": "GSAP" }
-    ],
-    "images": ["/project.png"]
-  },
-  {
-    "name": "Sombra",
-    "intro": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sint voluptates vitae deserunt quidem! Nisi, ipsum!",
-    "title": "Passport to Global Education",
-    "description": "FlyMasters is dedicated to helping students achieve their dream of studying abroad. We provide expert assistance with securing scholarships, loans, and navigating the entire study abroad process. Whether you need financial guidance or visa support, FlyMasters is your trusted partner for a smooth and successful international education journey.",
-    "techStack": [
-      { "path": "/tech/vitejs.svg", "name": "Vite" },
-      { "path": "/tech/react.svg", "name": "React" },
-      { "path": "/tech/tailwindcss.svg", "name": "Tailwind" },
-      { "path": "/tech/gsap.svg", "name": "GSAP" },
-      { "path": "/tech/threejs.svg", "name": "Threejs" }
-    ],
-    "images": ["/project.png"]
-  },
-  {
-    "name": "Flymasters",
-    "intro": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sint voluptates vitae deserunt quidem! Nisi, ipsum!",
-    "title": "Passport to Global Education",
-    "description": "FlyMasters is dedicated to helping students achieve their dream of studying abroad. We provide expert assistance with securing scholarships, loans, and navigating the entire study abroad process. Whether you need financial guidance or visa support, FlyMasters is your trusted partner for a smooth and successful international education journey.",
-    "techStack": [
-      { "path": "/tech/vitejs.svg", "name": "Vite" },
-      { "path": "/tech/react.svg", "name": "React" },
-      { "path": "/tech/tailwindcss.svg", "name": "Tailwind" },
-      { "path": "/tech/gsap.svg", "name": "GSAP" },
-      { "path": "/tech/framer.svg", "name": "Framer" }
-    ],
-    "images": ["/project.png"]
-  },
-  {
-    "name": "Shardeum",
-    "intro": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sint voluptates vitae deserunt quidem! Nisi, ipsum!",
-    "title": "Passport to Global Education",
-    "description": "FlyMasters is dedicated to helping students achieve their dream of studying abroad. We provide expert assistance with securing scholarships, loans, and navigating the entire study abroad process. Whether you need financial guidance or visa support, FlyMasters is your trusted partner for a smooth and successful international education journey.",
-    "techStack": [
-      { "path": "/tech/vitejs.svg", "name": "Vite" },
-      { "path": "/tech/react.svg", "name": "React" },
-      { "path": "/tech/tailwindcss.svg", "name": "Tailwind" },
-      { "path": "/tech/gsap.svg", "name": "GSAP" },
-      { "path": "/tech/framer.svg", "name": "Framer" }
-    ],
-    "images": ["/project.png"]
-  },
-  {
-    "name": "Portfolio",
-    "intro": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sint voluptates vitae deserunt quidem! Nisi, ipsum!",
-    "title": "Passport to Global Education",
-    "description": "FlyMasters is dedicated to helping students achieve their dream of studying abroad. We provide expert assistance with securing scholarships, loans, and navigating the entire study abroad process. Whether you need financial guidance or visa support, FlyMasters is your trusted partner for a smooth and successful international education journey.",
+    "intro": "A frontend-focused project replicating the Mars Rejects website. It demonstrates advanced animations, user interactions, and responsive design.",
+    "title": "Exploration of the Mars Rejects Universe",
+    "description": "This project focuses on recreating the frontend experience of the Mars Rejects website. It highlights responsive design, complex animations using GSAP, and efficient layout management with CSS Grid and Flexbox. The clone is fully interactive, mimicking the original site’s UI/UX elements.",
     "techStack": [
       {
         "path": "/tech/vitejs.svg",
         "name": "Vite",
-        "tooltip": "Streamlined development with fast builds and Hot Module Replacement for efficient front-end development."
+        "tooltip": "A fast build tool for modern web development, providing instant server start and hot module replacement."
       },
       {
         "path": "/tech/react.svg",
         "name": "React",
-        "tooltip": "Created reusable components to build dynamic, scalable user interfaces."
+        "tooltip": "A JavaScript library for building user interfaces with reusable components and efficient state management."
       },
       {
         "path": "/tech/tailwindcss.svg",
         "name": "Tailwind",
-        "tooltip": "Used a utility-first CSS approach for rapid, responsive design without custom CSS."
+        "tooltip": "A utility-first CSS framework for rapid UI design with customizable styling classes."
+      },
+      {
+        "path": "/tech/gsap.svg",
+        "name": "GSAP",
+        "tooltip": "A powerful JavaScript library for creating high-performance animations with a simple API, enabling smooth transitions and complex sequences."
+      }
+    ],
+    "images": ["/projects/mars-reject.png"]
+  },
+  {
+    "name": "Sombra Network",
+    "intro": "A responsive and visually dynamic platform developed to enhance user interaction and experience.",
+    "title": "Crafting a Dynamic User Experience for Sombra Network",
+    "description": "This project focuses on the frontend development of the Sombra Network Official Website. It features smooth animations using GSAP, responsive design with CSS Grid and Flexbox, and an interactive user interface. The website emphasizes usability and aesthetics, providing a seamless experience across various devices.",
+    "techStack": [
+      {
+        "path": "/tech/vitejs.svg",
+        "name": "Vite",
+        "tooltip": "A fast build tool for modern web development, providing instant server start and hot module replacement."
+      },
+      {
+        "path": "/tech/react.svg",
+        "name": "React",
+        "tooltip": "A JavaScript library for building user interfaces with reusable components and efficient state management."
+      },
+      {
+        "path": "/tech/tailwindcss.svg",
+        "name": "Tailwind",
+        "tooltip": "A utility-first CSS framework for rapid UI design with customizable styling classes."
+      },
+      {
+        "path": "/tech/gsap.svg",
+        "name": "GSAP",
+        "tooltip": "A powerful JavaScript library for creating high-performance animations with a simple API, enabling smooth transitions and complex sequences."
+      },
+      {
+        "path": "/tech/threejs.svg",
+        "name": "Three.js",
+        "tooltip": "A JavaScript library for creating 3D graphics in the browser, allowing developers to render interactive 3D environments and animations."
+      }
+    ],
+    "images": [
+      "/projects/sombra-network/sombra-network-1.png",
+      "/projects/sombra-network/sombra-network-2.png",
+      "/projects/sombra-network/sombra-network-3.png",
+      "/projects/sombra-network/sombra-network-4.png"
+    ]
+  },
+  {
+    "name": "FlyMasters",
+    "intro": "A platform for students to acquire scholarships and loans for studying abroad, featuring engaging animations.",
+    "title": "Passport to Global Education",
+    "description": "This project focuses on the frontend development of FlyMasters, a platform aimed at helping students navigate scholarship and loan options for international education. The website features smooth animations and a responsive design that enhances user interaction. Key technologies include React for dynamic rendering, GSAP for engaging animations, and CSS for a visually appealing layout. The platform prioritizes user experience, ensuring intuitive navigation and accessibility across devices.",
+    "techStack": [
+      {
+        "path": "/tech/vitejs.svg",
+        "name": "Vite",
+        "tooltip": "A fast build tool for modern web development, providing instant server start and hot module replacement."
+      },
+      {
+        "path": "/tech/react.svg",
+        "name": "React",
+        "tooltip": "A JavaScript library for building user interfaces with reusable components and efficient state management."
+      },
+      {
+        "path": "/tech/tailwindcss.svg",
+        "name": "Tailwind",
+        "tooltip": "A utility-first CSS framework for rapid UI design with customizable styling classes."
+      },
+      {
+        "path": "/tech/gsap.svg",
+        "name": "GSAP",
+        "tooltip": "A powerful JavaScript library for creating high-performance animations with a simple API, enabling smooth transitions and complex sequences."
+      },
+      {
+        "path": "/tech/framer.svg",
+        "name": "Framer",
+        "tooltip": "A popular React library for easily creating animations and transitions, offering simple syntax and powerful capabilities for UI interactions."
+      }
+    ],
+    "images": ["/projects/flymasters.png"]
+  },
+  {
+    "listName": "Portfolio",
+    "name": "My Portfolio",
+    "intro": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sint voluptates vitae deserunt quidem! Nisi, ipsum!",
+    "title": "A Self-Contained Showcase of My Work",
+    "description": "This portfolio features a dynamic interface that invites users to explore various sections represented by a galaxy theme. Each section is accessible through interactive elements that enhance the user experience, allowing for smooth transitions and animations. Built using GSAP for animations and Three.js for the visual framework, the portfolio combines creative design with technical execution, showcasing the projects in a visually appealing way.",
+    "techStack": [
+      {
+        "path": "/tech/vitejs.svg",
+        "name": "Vite",
+        "tooltip": "A fast build tool for modern web development, providing instant server start and hot module replacement."
+      },
+      {
+        "path": "/tech/react.svg",
+        "name": "React",
+        "tooltip": "A JavaScript library for building user interfaces with reusable components and efficient state management."
+      },
+      {
+        "path": "/tech/tailwindcss.svg",
+        "name": "Tailwind",
+        "tooltip": "A utility-first CSS framework for rapid UI design with customizable styling classes."
       },
       {
         "path": "/tech/gsap.svg",
@@ -82,28 +130,44 @@
       },
       {
         "path": "/tech/threejs.svg",
-        "name": "Threejs",
-        "tooltip": "Built interactive 3D graphics, enhancing user experience with immersive visuals."
+        "name": "Three.js",
+        "tooltip": "A JavaScript library for creating 3D graphics in the browser, allowing developers to render interactive 3D environments and animations."
       },
       {
         "path": "/tech/redux.svg",
         "name": "Redux",
-        "tooltip": "Managed global state efficiently, ensuring predictable state changes across the app."
+        "tooltip": "A predictable state management library for JavaScript apps, enabling centralized state management and making it easier to manage app data flow."
       }
     ],
-    "images": ["/project.png"]
+    "images": ["/projects/portfolio.png"]
   },
   {
     "name": "Monkeytype",
-    "intro": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sint voluptates vitae deserunt quidem! Nisi, ipsum!",
-    "title": "Passport to Global Education",
-    "description": "FlyMasters is dedicated to helping students achieve their dream of studying abroad. We provide expert assistance with securing scholarships, loans, and navigating the entire study abroad process. Whether you need financial guidance or visa support, FlyMasters is your trusted partner for a smooth and successful international education journey.",
+    "intro": "A clone of the popular typing website Monkeytype, designed to enhance typing skills.",
+    "title": "Master Your Typing Skills",
+    "description": "This project is a clone of the renowned typing website Monkeytype, focusing on improving typing speed and accuracy. Built with Next.js for server-side rendering, MongoDB for data management, and Tailwind CSS for styling, it provides a responsive and user-friendly interface. The application also incorporates Chart.js to visualize typing statistics, allowing users to track their progress over time. This project emphasizes performance and usability, delivering a seamless experience for users aiming to refine their typing abilities.",
     "techStack": [
-      { "path": "/tech/nextjs.svg", "name": "NextJS" },
-      { "path": "/tech/mongodb.svg", "name": "Mongodb" },
-      { "path": "/tech/tailwindcss.svg", "name": "Tailwind" },
-      { "path": "/tech/chartjs.svg", "name": "ChartJS" }
+      {
+        "path": "/tech/nextjs.svg",
+        "name": "Next.js",
+        "tooltip": "A React framework for building server-side rendered and static web applications, enabling optimized performance and SEO benefits."
+      },
+      {
+        "path": "/tech/mongodb.svg",
+        "name": "MongoDB",
+        "tooltip": "A NoSQL database that stores data in flexible, JSON-like documents, allowing for easy scalability and complex queries."
+      },
+      {
+        "path": "/tech/tailwindcss.svg",
+        "name": "Tailwind",
+        "tooltip": "A utility-first CSS framework for rapid UI design with customizable styling classes."
+      },
+      {
+        "path": "/tech/chartjs.svg",
+        "name": "Chart.js",
+        "tooltip": "A simple yet flexible JavaScript library for creating interactive charts and visualizations in web applications."
+      }
     ],
-    "images": ["/project.png"]
+    "images": ["/projects/monkeytype.png"]
   }
 ]

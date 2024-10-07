@@ -9,7 +9,8 @@ const ProjectsList = ({ isLearningMore, activeProject, setActiveProject }) => {
   useUpdateEffect(() => {
     if (isLearningMore)
       gsap.to(projectsList.current, {
-        x: -1000,
+        x: -2000,
+        duration: 1,
         onComplete: () => {
           const listItems = projectsList.current.querySelectorAll("li");
           gsap.set(listItems, { yPercent: 0 });
@@ -60,7 +61,7 @@ const ProjectsList = ({ isLearningMore, activeProject, setActiveProject }) => {
         isLearningMore ? "" : ""
       }`}
     >
-      {projects.map(({ name }, i) => (
+      {projects.map(({ name, listName }, i) => (
         <li
           key={i}
           style={{
@@ -84,7 +85,7 @@ const ProjectsList = ({ isLearningMore, activeProject, setActiveProject }) => {
               : "hover:bg-white/80 hover:text-black/80"
           }`}
         >
-          {name}
+          {listName || name}
         </li>
       ))}
     </ul>

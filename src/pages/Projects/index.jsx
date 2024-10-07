@@ -28,17 +28,23 @@ const Projects = ({ useOnActive }) => {
   });
 
   const originalAttributes = useRef(null);
+  const isAnimating = useRef(false);
 
   const handleLearnMore = () => {
     if (!originalAttributes.current) {
       originalAttributes.current = { ...attributes };
     }
 
+    if (isAnimating.current) return;
+
+    isAnimating.current = true;
+
     if (isLearningMore) {
       setAttributes({
         targetX: originalAttributes.current.x,
         targetY: originalAttributes.current.y,
         duration: 1,
+        onComplete: () => (isAnimating.current = false),
       });
     } else {
       const { offset, size, side } = pages.find(
@@ -49,6 +55,7 @@ const Projects = ({ useOnActive }) => {
         targetX: attributes.x + cameraAttributes[side] - offset * size,
         targetY: focusedPlanet.position.y * attributes.zoom * 2,
         duration: 1,
+        onComplete: () => (isAnimating.current = false),
       });
     }
 
@@ -63,9 +70,9 @@ const Projects = ({ useOnActive }) => {
       ".project-learn-more-wrapper"
     );
 
-    const name = document.querySelector(".project-name");
-    const learn = document.querySelector(".project-learn-more");
-    const learnMoreTexts = learn.querySelectorAll("span");
+    const name = document.querySelector(".project-name"); // name of the project
+    const learn = document.querySelector(".project-learn-more"); // learn more btn
+    const learnMoreTexts = learn.querySelectorAll(".flip-visible-element span"); // "Go back" and "Learn more"
 
     const nameState = Flip.getState(name);
     const learnState = Flip.getState(learn);

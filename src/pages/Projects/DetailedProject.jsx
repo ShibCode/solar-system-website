@@ -4,6 +4,7 @@ import gsap from "gsap";
 import projects from "../../data/projects.json";
 import { useAttributes } from "../../context/AttributesProvider";
 import { useSelector } from "react-redux";
+import DepthCarousel from "./DepthCarousel";
 
 const DetailedProject = ({ isLearningMore, activeProject }) => {
   const wrapper = useRef();
@@ -66,7 +67,7 @@ const DetailedProject = ({ isLearningMore, activeProject }) => {
           <div className="flex flex-col items-center justify-center text-center gap-3">
             <h6
               style={{ opacity: 0 }}
-              className="text-xl font-semibold max-w-[400px] detailed-project-item"
+              className="text-xl font-semibold max-w[400px] detailed-project-item"
             >
               {projects[activeProject].title}
             </h6>
@@ -108,16 +109,23 @@ const DetailedProject = ({ isLearningMore, activeProject }) => {
         </div>
       </div>
 
-      <div
-        className={`aspect-[1600/900] flex items-center justify-center w-full max-w-[650px]`}
-      >
-        <img
-          style={{ opacity: 0 }}
-          src="/project.png"
-          alt="flymasters"
-          className="w-full h-full rounded-xl detailed-project-item"
+      {projects[activeProject].images.length > 1 ? (
+        <DepthCarousel
+          data={projects[activeProject].images}
+          className="detailed-project-item"
         />
-      </div>
+      ) : (
+        <div
+          className={`aspect-[1600/900] flex items-center justify-center w-full max-w-[650px]`}
+        >
+          <img
+            style={{ opacity: 0 }}
+            src={projects[activeProject].images[0]}
+            alt="flymasters"
+            className="w-full h-full rounded-xl detailed-project-item"
+          />
+        </div>
+      )}
     </div>
   );
 };

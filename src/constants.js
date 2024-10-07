@@ -36,9 +36,9 @@ export const pages = [
     planet: {
       size: 0.3,
       positionIndex: 0.55,
+      zoomIndex: 0.8,
       color: "turquoise",
-      side: "left",
-      offset: 3.75,
+      offset: 0,
     },
   },
   {

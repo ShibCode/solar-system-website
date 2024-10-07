@@ -1,4 +1,4 @@
-import { Html } from "@react-three/drei";
+import { Html, useTexture } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import gsap from "gsap";
 import React, { forwardRef, useEffect, useMemo, useRef, useState } from "react";
@@ -78,7 +78,7 @@ const Planet = forwardRef(({ page, orbit, points, mesh, index }, ref) => {
     });
   }, []);
 
-  useFrame(() => {
+  useFrame(({ clock }) => {
     if (labelRef.current) {
       setLabel(labelRef.current);
       labelRef.current = null;
@@ -105,6 +105,8 @@ const Planet = forwardRef(({ page, orbit, points, mesh, index }, ref) => {
     // }
   });
 
+  const normal = useTexture("/normal.png");
+
   return (
     <>
       <mesh
@@ -116,7 +118,11 @@ const Planet = forwardRef(({ page, orbit, points, mesh, index }, ref) => {
         userData={page}
       >
         <sphereGeometry args={[1, 32, 32]} />
-        <meshStandardMaterial color={planet.color} transparent />
+        <meshStandardMaterial
+          color={planet.color}
+          transparent
+          normalMap={normal}
+        />
 
         <Html
           ref={labelRef}
@@ -130,7 +136,7 @@ const Planet = forwardRef(({ page, orbit, points, mesh, index }, ref) => {
         </Html>
       </mesh>
 
-      {/* <mesh ref={moon} scale={planet.size / 2}>
+      {/* <mesh ref={moon} scale={planet.size / 5}>
         <sphereGeometry args={[1, 32, 32]} />
         <meshStandardMaterial color="#F6F1D5" />
       </mesh> */}
