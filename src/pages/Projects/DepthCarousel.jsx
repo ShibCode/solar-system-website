@@ -6,6 +6,7 @@ const VISIBLE_SLIDES = 3;
 
 const DepthCarousel = ({ className = "", data }) => {
   const [activeImage, setActiveImage] = useState(0);
+  const [activeImageLabel, setActiveImageLabel] = useState(activeImage);
   const [isAnimating, setIsAnimating] = useState(false);
 
   const zeroImage = useRef(null);
@@ -17,9 +18,11 @@ const DepthCarousel = ({ className = "", data }) => {
   const next = () => {
     if (isAnimating) return;
 
-    const newActiveImage = (activeImage + 1) % data.length;
+    const newActiveImage = (activeImage + 1) % data.images.length;
 
     setIsAnimating(true);
+
+    setActiveImageLabel(newActiveImage);
 
     gsap.to(firstImage.current, {
       opacity: 0,
@@ -52,9 +55,12 @@ const DepthCarousel = ({ className = "", data }) => {
   const prev = () => {
     if (isAnimating) return;
 
-    const newActiveImage = (activeImage - 1 + data.length) % data.length;
+    const newActiveImage =
+      (activeImage - 1 + data.images.length) % data.images.length;
 
     setIsAnimating(true);
+
+    setActiveImageLabel(newActiveImage);
 
     gsap.to(zeroImage.current, {
       opacity: 1,
@@ -87,7 +93,7 @@ const DepthCarousel = ({ className = "", data }) => {
     gsap.set(zeroImage.current, { zIndex: 1, opacity: 0, yPercent: 100 });
 
     gsap.set(lastImage.current, {
-      zIndex: -data.length,
+      zIndex: -data.images.length,
       transform: `perspective(100px) 
           translateZ(${VISIBLE_SLIDES * -0.5}em) 
           translateY(${VISIBLE_SLIDES * 50}px)`,
@@ -106,13 +112,17 @@ const DepthCarousel = ({ className = "", data }) => {
     <div
       className={`flex flex-col items-center gap-10 relative aspect-[1600/900] max-w-[650px] w-full text-[20px] ${className}`}
     >
-      <div className="absolute top-full translate-y-20 flex gap-2.5 xs:gap-8 z-10">
+      <div className="absolute top-full translate-y-20 flex items-center gap-5 z-10">
         <button
           onClick={prev}
           className="size-10 bg-black text-white rounded-md flex justify-center items-center"
         >
           <ChevronIcon className="rotate-180 w-7 xs:w-auto" />
         </button>
+
+        <div>
+          {activeImageLabel + 1} of {data.images.length}
+        </div>
 
         <button
           onClick={next}
@@ -124,26 +134,51 @@ const DepthCarousel = ({ className = "", data }) => {
 
       <Card
         ref={zeroImage}
-        card={data[(activeImage + data.length - 1) % data.length]}
+        link={data.link}
+        image={
+          data.images[
+            (activeImage + data.images.length - 1) % data.images.length
+          ]
+        }
       />
-
-      <Card ref={firstImage} card={data[(activeImage + 0) % data.length]} />
-      <Card ref={secondImage} card={data[(activeImage + 1) % data.length]} />
-      <Card ref={thirdImage} card={data[(activeImage + 2) % data.length]} />
-      <Card ref={lastImage} card={data[(activeImage + 3) % data.length]} />
+      <Card
+        ref={firstImage}
+        link={data.link}
+        image={data.images[(activeImage + 0) % data.images.length]}
+      />
+      <Card
+        ref={secondImage}
+        link={data.link}
+        image={data.images[(activeImage + 1) % data.images.length]}
+      />
+      <Card
+        ref={thirdImage}
+        link={data.link}
+        image={data.images[(activeImage + 2) % data.images.length]}
+      />
+      <Card
+        ref={lastImage}
+        link={data.link}
+        image={data.images[(activeImage + 3) % data.images.length]}
+      />
     </div>
   );
 };
 
 export default DepthCarousel;
 
-const Card = forwardRef(({ card }, ref) => {
+const Card = forwardRef(({ image, link }, ref) => {
   return (
-    <img
+    <a
       ref={ref}
-      src={card}
-      alt="temp"
-      className="w-full h-full object-cover absolute top-0 left-0 rounded-xl"
-    />
+      href={link}
+      target="_blank"
+      className="w-full h-full absolute top-0 left-0 rounded-xl border-2 border-white overflow-hidden group"
+    >
+      <img
+        src={image}
+        className="w-full h-full object-cover group-hover:scale-105 transition-all duration-300 origin-top rounded-xl"
+      />
+    </a>
   );
 });

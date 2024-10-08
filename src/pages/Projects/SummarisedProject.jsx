@@ -65,14 +65,16 @@ const SummarisedProject = ({
         ref={image}
         activeState={activeProject}
         fade="over"
-        className={`aspect-[1600/900] flex items-center justify-center w-full`}
+        className={`aspect-[1600/900] flex items-center justify-center w-full rounded-xl border-2 border-white group overflow-hidden`}
       >
         {(state) => (
-          <img
-            src={projects[state].images[0]}
-            alt="flymasters"
-            className="w-full h-full rounded-xl"
-          />
+          <a href={projects[state].link} target="_blank">
+            <img
+              src={projects[state].images[0]}
+              alt="flymasters"
+              className="w-full h-full group-hover:scale-105 transition-all duration-300 origin-top"
+            />
+          </a>
         )}
       </Flip>
     </div>

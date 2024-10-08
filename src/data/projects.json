@@ -26,7 +26,8 @@
         "tooltip": "A powerful JavaScript library for creating high-performance animations with a simple API, enabling smooth transitions and complex sequences."
       }
     ],
-    "images": ["/projects/mars-reject.png"]
+    "images": ["/projects/mars-reject.png"],
+    "link": "https://mars-reject-clone.vercel.app/"
   },
   {
     "name": "Sombra Network",
@@ -65,7 +66,8 @@
       "/projects/sombra-network/sombra-network-2.png",
       "/projects/sombra-network/sombra-network-3.png",
       "/projects/sombra-network/sombra-network-4.png"
-    ]
+    ],
+    "link": "https://sombra-network-website.vercel.app/"
   },
   {
     "name": "FlyMasters",
@@ -99,12 +101,13 @@
         "tooltip": "A popular React library for easily creating animations and transitions, offering simple syntax and powerful capabilities for UI interactions."
       }
     ],
-    "images": ["/projects/flymasters.png"]
+    "images": ["/projects/flymasters.png"],
+    "link": "https://flymasters.vercel.app/"
   },
   {
     "listName": "Portfolio",
     "name": "My Portfolio",
-    "intro": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sint voluptates vitae deserunt quidem! Nisi, ipsum!",
+    "intro": "A showcase of my skills and projects in web development.",
     "title": "A Self-Contained Showcase of My Work",
     "description": "This portfolio features a dynamic interface that invites users to explore various sections represented by a galaxy theme. Each section is accessible through interactive elements that enhance the user experience, allowing for smooth transitions and animations. Built using GSAP for animations and Three.js for the visual framework, the portfolio combines creative design with technical execution, showcasing the projects in a visually appealing way.",
     "techStack": [
@@ -139,7 +142,8 @@
         "tooltip": "A predictable state management library for JavaScript apps, enabling centralized state management and making it easier to manage app data flow."
       }
     ],
-    "images": ["/projects/portfolio.png"]
+    "images": ["/projects/portfolio.png"],
+    "links": "https://solar-system-website-six.vercel.app/"
   },
   {
     "name": "Monkeytype",
@@ -168,6 +172,7 @@
         "tooltip": "A simple yet flexible JavaScript library for creating interactive charts and visualizations in web applications."
       }
     ],
-    "images": ["/projects/monkeytype.png"]
+    "images": ["/projects/monkeytype.png"],
+    "link": "https://monkey-type-clone.vercel.app/"
   }
 ]

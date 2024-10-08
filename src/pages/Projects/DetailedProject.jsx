@@ -54,7 +54,7 @@ const DetailedProject = ({ isLearningMore, activeProject }) => {
     <div
       ref={wrapper}
       style={{ maxHeight: 0 }} // to avoid scroll when not opened
-      className={`flex flex-col gap-10 items-center w-full absolute top-0 pb-[calc(50vh-183px)] overflow-hidden ${
+      className={`flex flex-col gap-14 items-center w-full absolute top-0 pb-[calc(50vh-183px)] overflow-hidden ${
         isLearningMore ? "pointer-events-auto" : "pointer-events-none"
       }`}
     >
@@ -106,25 +106,35 @@ const DetailedProject = ({ isLearningMore, activeProject }) => {
               ))}
             </div>
           </div>
+
+          <a
+            href={projects[activeProject].link}
+            target="_blank"
+            className="text-orange-600 border-b border-current text-xl detailed-project-item"
+          >
+            Live Link
+          </a>
         </div>
       </div>
 
       {projects[activeProject].images.length > 1 ? (
         <DepthCarousel
-          data={projects[activeProject].images}
+          data={projects[activeProject]}
           className="detailed-project-item"
         />
       ) : (
-        <div
-          className={`aspect-[1600/900] flex items-center justify-center w-full max-w-[650px]`}
+        <a
+          style={{ opacity: 0 }}
+          href={projects[activeProject].link}
+          target="_blank"
+          className={`aspect-[1600/900] flex items-center justify-center w-full max-w-[650px] border-2 border-white rounded-xl overflow-hidden detailed-project-item group`}
         >
           <img
-            style={{ opacity: 0 }}
             src={projects[activeProject].images[0]}
             alt="flymasters"
-            className="w-full h-full rounded-xl detailed-project-item"
+            className="w-full h-full group-hover:scale-105 transition-all duration-300 origin-top"
           />
-        </div>
+        </a>
       )}
     </div>
   );
